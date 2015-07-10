@@ -1,5 +1,6 @@
 var CANVAS = $("#exportImg"),
     CONTEXT = CANVAS[0].getContext("2d"),
+    SCALE = 1,
     BLEED;
 
 function drawTextElement(element){
@@ -7,8 +8,8 @@ function drawTextElement(element){
         lineHeight = element.css("line-height").slice(0,-2)*1,
         line = "",
         width = element.width(),
-        y = element.position().top,
-        x = element.position().left;
+        y = element.position().top / SCALE,
+        x = element.position().left / SCALE;
 
     if (BLEED){
         y += 63;
@@ -52,7 +53,9 @@ function drawImageElement(element,after,src){
         height = element.innerHeight(),
         position = element.position(),
         img = new Image()
-        $(img).attr("crossorigin","anonymous")
+        $(img).attr("crossorigin","anonymous");
+    position.top /= SCALE
+    position.left /= SCALE
     if (src.substr(0,1) == '"' || src.substr(0,1) == "'"){
         src = src.slice(1,-1)
     }
@@ -137,8 +140,7 @@ function drawCardElement(after){
 }
 
 function redraw(){
-    $(".card").css("transform","").css("visibility","hidden")
-
+    $("#working").show()
 
     drawCardElement(function(){
         $(".name, .image, .attrs,.card .effect,.card .flavour, .copyright").each(function(){
@@ -150,8 +152,7 @@ function redraw(){
                 drawImageElement($(this),function(){
                     toDo--;
                     if(!toDo){
-                        $(window).resize();
-                        $(".card").css("visibility","")
+                        $("#working").hide()
                     }
                 });
             })
@@ -163,7 +164,7 @@ function redraw(){
 }
 
 $(document).ready(function(){
-    $("#canvasExport").mousedown(redraw)
+    $("#canvasExport").mousedown(redraw);
 
     $("#bleedCard").change(function(){
         BLEED = $("#bleedCard").prop('checked');
@@ -176,6 +177,7 @@ $(document).ready(function(){
         }
     }).change();
 
-    $("#bleedCard").change(redraw)
+    $("#bleedCard, .card textarea, .card input").change(redraw)
+    $(".card .symbolSelect button").click(redraw)
     redraw();
 })
