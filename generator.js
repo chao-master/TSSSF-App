@@ -85,10 +85,25 @@ function drawImageElement(element,after,src){
         if(after){after()}
     }
     img.onerror = function(){
-        mayError({
-            error:"Failed to load card art",
-            details:"Try reloading the image"
-        })
+        if (element.hasClass("image")){
+            if (src.substr(0,4) == "http"){
+                mayError({
+                    error:"Failed to load card art",
+                    details:"Check connection and image link, if image otherwise loads normally the website may have CROS disabled."+
+                        "Try imgur.com, or the upload option"
+                })
+            } else {
+                mayError({
+                    error:"Failed to load card art",
+                    details:"Try reselecting the image"
+                })
+            }
+        } else {
+            mayError({
+                error:"Failed to load resource",
+                details:"Check connection and try again."
+            })
+        }
         if(after){after()}
     }
     img.src = src
