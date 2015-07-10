@@ -19,6 +19,11 @@ $(document).ready(function(){
         reader.readAsDataURL(file);
     })
 
+    //Autofocus URL field on popup
+    $("#webimage-dialog").on("shown.bs.modal",function(e){
+        $("#webimage").focus()
+    })
+
     //Get image from website
     $("#submit-webimage").click(function(e){
         var img = $("#webimage").val()
