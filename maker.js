@@ -35,22 +35,6 @@ function cardSetup(){
         $(".cardwrapper").height(1088*f);
     });
 
-    //Add Hidden File Input click cascade
-    $(".card .image .upload").click(function(e){
-        $("#uploadImage").click()
-    })
-
-    //Load image
-    $("#uploadImage").change(function(){
-        var file = this.files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-			console.log(reader);
-            $(".card .image").css("background-image","url("+reader.result+")")
-        }
-        reader.readAsDataURL(file);
-    })
-
     //Constant infomation for special escape code handling.
     var SPECIAL_REGEX = /\\(malefemale|unicorn|pegasus|earth|alicorn|goal|time|female|male|ship|replace|swap|draw|newgoal|search|copy|changeling)/g
     var SPECIAL_REPLACE = {

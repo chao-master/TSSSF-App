@@ -161,6 +161,6 @@ $(document).ready(function(){
         }
     }).change();
 
-    $("#bleedCard,#uploadImage").change(redraw)
+    $("#bleedCard").change(redraw)
     redraw();
 })

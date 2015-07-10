@@ -33,6 +33,20 @@
             <div class="flavour"></div>
         </div>
 
+        <div id="webimage-dialog" class="modal fade" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                  <input class="form-control floating-label" type="text" id="webimage" placeholder="Image URL"/>
+              </div>
+              <div class="modal-footer">
+                <button id="submit-webimage" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <main class="clearAfter container">
 
             <div class="row">
@@ -43,22 +57,25 @@
                                 <input type="text" class="nameInput" placeholder="Card Name" required/>
                                 <div class="name"></div>
                                 <div class="image">
-                                    <button class="upload"><i class="fa fa-upload"></i></button>
+                                    <button class="upload"><i class="fa fa-fw fa-upload"></i></button>
+                                    <button data-toggle="modal" data-target="#webimage-dialog">
+                                        <i class="fa fa-fw fa-globe"></i>
+                                    </button>
                                 </div>
                                 <div class="iconCard"></div>
-                                <div class="iconGender">
-                                    <button value="female"></button>
-                                    <button value="male"></button>
-                                    <button value="maleFemale"></button>
-                                    <button value="G"></button>
+                                <div class="iconGender symbolSelect">
+                                    <button class="symbol" value="female"></button>
+                                    <button class="symbol" value="male"></button>
+                                    <button class="symbol" value="maleFemale"></button>
+                                    <button class="symbol blank" value="G"></button>
                                 </div>
-                                <div class="iconRace">
-                                    <button value="unicorn"></button>
-                                    <button value="pegasus"></button>
-                                    <button value="earthPony"></button>
-                                    <button value="alicorn"></button>
-                                    <button value="changeling"></button>
-                                    <button value="R"></button>
+                                <div class="iconRace symbolSelect">
+                                    <button class="symbol" value="unicorn"></button>
+                                    <button class="symbol" value="pegasus"></button>
+                                    <button class="symbol" value="earthPony"></button>
+                                    <button class="symbol" value="alicorn"></button>
+                                    <button class="symbol" value="changeling"></button>
+                                    <button class="symbol blank" value="R"></button>
                                 </div>
                                 <div class="type">
                                     <button value="pony"></button>
@@ -69,15 +86,15 @@
                                 <input type="text" class="attrs" placeholder="Attributes"/>
                                 <textarea class="effect" placeholder="Effect" required></textarea>
                                 <textarea class="flavour" placeholder="Flavour Text" required></textarea>
-                                <div class="iconGoal">
-                                    <button value="s0"></button>
-                                    <button value="s1"></button>
-                                    <button value="s2"></button>
-                                    <button value="s3"></button>
+                                <div class="iconGoal symbolSelect">
+                                    <button class="symbol" value="s0"></button>
+                                    <button class="symbol" value="s1"></button>
+                                    <button class="symbol" value="s2"></button>
+                                    <button class="symbol" value="s3"></button>
                                 </div>
-                                <div class="iconTime">
-                                    <button value="time"></button>
-                                    <button value=""></button>
+                                <div class="iconTime symbolSelect">
+                                    <button class="symbol" value="time"></button>
+                                    <button class="symbol" value=""></button>
                                 </div>
                                 <input type="text" class="copyright" placeholder="Copyright &amp; Artist infomation" required/>
                             </div>
@@ -182,6 +199,7 @@
         <script src="state.js"></script>
         <script src="maker.js"></script>
         <script src="generator.js"></script>
+        <script src="image.js"></script>
         <script>
             $(document).ready(function() {
                 if('ontouchstart' in window){
