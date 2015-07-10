@@ -52,8 +52,13 @@ function drawImageElement(element,after,src){
         width = element.innerWidth(),
         height = element.innerHeight(),
         position = element.position(),
-        img = new Image()
+        img = new Image(),
+        bgSize = element.css("background-size").match(/([0-9]+)px(?: ([0-9]+)px)?/)
         $(img).attr("crossorigin","anonymous");
+    if(bgSize){
+        width = bgSize[1]*1
+        height = (bgSize[2] || bgSize[1])*1
+    }
     position.top /= SCALE
     position.left /= SCALE
     if (src.substr(0,1) == '"' || src.substr(0,1) == "'"){
