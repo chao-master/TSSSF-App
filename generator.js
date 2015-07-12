@@ -76,7 +76,7 @@ function drawImageElement(element,after,src){
         if(after){after()}
         return;
     }
-    img.onload = function() {
+    $(img).load(function() {
         var sWidth = img.width,
             sHeight = img.height,
             sX = 0, sY = 0,
@@ -91,8 +91,7 @@ function drawImageElement(element,after,src){
         }
         CONTEXT.drawImage(img,sX,sY,sWidth,sHeight,position.left,position.top,width,height);
         if(after){after()}
-    }
-    img.onerror = function(){
+    }).error(function(e){
         if (element.hasClass("image")){
             if (src.substr(0,4) == "http"){
                 mayError({
@@ -109,11 +108,12 @@ function drawImageElement(element,after,src){
         } else {
             mayError({
                 error:"Failed to load resource",
-                details:"Check connection and try again."
+                details:"Resource for "+element.attr("class").match(/[^ ]+/)+" not found. Check connection and try again."
             })
         }
         if(after){after()}
-    }
+        return false;
+    })
     img.src = src
 }
 
@@ -145,6 +145,7 @@ function drawCardElement(after){
 }
 
 function redraw(){
+    clearErrors();
     $("#working").show()
 
     drawCardElement(function(){

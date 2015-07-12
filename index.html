@@ -25,6 +25,17 @@
             #uploadImage{
                 display:none;
             }
+            #error {
+                padding-left:0;
+            }
+            #error li{
+                padding:10px;
+                margin-bottom:0px;
+                background-color: #f44336;
+            }
+            #error li:nth-child(2n){
+                background-color: #E53935;
+            }
         </style>
     </head>
     <body>
@@ -117,13 +128,17 @@
                             <input id="uploadImage" type="file" accept="image/"/>
 
                             <div class="btn-group">
-                                <a id="canvasExport" class="btn btn-warning">Export
+                                <a id="canvasExport" class="btn btn-success">Export
                                     <canvas id="exportImg" width="788" height="1088"></canvas>
                                 </a>
-                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="collapse" data-target="#advanceExport">
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="collapse" data-target="#advanceExport">
                                     <span class="caret"></span>
                                 </button>
                             </div>
+
+                            <button type="button" class="btn btn-warning" id="errorClear" style="display:none">
+                                Clear errors
+                            </button>
 
                             <i id="working" class="fa fa-cog fa-spin fa-3x" style="display:none;vertical-align:middle;"></i>
 
@@ -135,10 +150,9 @@
                                 </div>
                             </div>
 
-                            <div id="error" class="alert alert-danger" style="display:none">
-                                <strong></strong>
-                                <em></em>
-                            </div>
+                            <ul id="error" style="display:none">
+                            </ul>
+
                             <br>
                             Symbols and Powers Guide:
                             <div class=row>

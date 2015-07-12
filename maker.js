@@ -2,14 +2,28 @@
 function mayError(errObj){
     if (errObj.error){
         console.log(errObj)
-        $("#error strong").text(errObj.error);
-        $("#error em").text(errObj.details);
+        $("<li>").append(
+            $("<strong>").text(errObj.error+": ")
+        ).append(
+            $("<em>").text(errObj.details)
+        ).addClass("alert alert-danger").appendTo("#error");
         $("#error").show()
+        $("#errorClear").show()
         return 1;
     } else {
         return 0;
     }
 }
+
+//Clear Errors
+function clearErrors(){
+    $("#error").hide()
+    $("#errorClear").hide()
+}
+
+$(document).ready(function(){
+    $("#errorClear").click(clearErrors)
+})
 
 function cardSetup(){
     //On card button clicks, remove other classes and add new ones.
