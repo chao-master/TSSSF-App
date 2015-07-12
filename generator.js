@@ -133,8 +133,8 @@ function drawCardElement(after){
         back = back.replace("$1","Pony");
     } else if (element.hasClass("ship")) {
         back = back.replace("$1","Ship");
-    } else if (element.hasClass("goal")) {
-        back = back.replace("$1","Goal");
+    } else if (element.hasClass("start")) {
+        back = back.replace("$1","Start");
     } else {
         mayError({
             error:"Bad card type",
