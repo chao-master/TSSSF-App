@@ -1,3 +1,28 @@
+function readMetaData(buffer){
+    var view = new DataView(buffer);
+    //First step, check it is a png image
+    if (view.getUint32(0) != 0x89504e47 || view.getUint32(4) != 0xd0a1a0a){
+        //Not a png image
+        return false;
+    }
+    var head = 8,info={};
+    while(head<vew.byteLength){
+        var len=view.getUint32(head),
+            type=view.getUint32(head+4),
+            chk=view.getUint32(head+8+len);
+        if( type == 0x74455874 ){
+            var pData = new Int8Array(buffer,head+8,len);
+            //((we really should verify the checksum here))
+            var payload = new TextDecoder("utf-8").decode(pData);
+            var keyData = payload.split("\0");
+            //((we may want to check for duplicate values))
+            info[keyData[0]] = keyData[1];
+        }
+        head+=12+len;
+    }
+    return info;
+}
+
 function addMetaData(uri){
     var metaData = makeTextBlock("cv","0.1")+
                    makeTextBlock("name", $(".card .name").text())+
