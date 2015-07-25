@@ -1,3 +1,4 @@
+//Handels generating the card image
 var CANVAS = $("#exportImg"),
     CONTEXT = CANVAS[0].getContext("2d"),
     SCALE = 1,
@@ -163,10 +164,10 @@ function redraw(){
                 });
             })
         })
-    })
+    });
     $("#canvasExport")
         .attr("download",$(".name").text()+".png")
-        .attr("href",CANVAS[0].toDataURL())
+        .attr("href",addMetaData(CANVAS[0].toDataURL()))
 }
 
 $(document).ready(function(){
