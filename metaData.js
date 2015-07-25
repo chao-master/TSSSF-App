@@ -6,7 +6,7 @@ function readMetaData(buffer){
         return false;
     }
     var head = 8,info={};
-    while(head<vew.byteLength){
+    while(head<view.byteLength){
         var len=view.getUint32(head),
             type=view.getUint32(head+4),
             chk=view.getUint32(head+8+len);

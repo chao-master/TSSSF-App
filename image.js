@@ -15,7 +15,7 @@ $(document).ready(function(){
             $(".card .image").css("background-image","url("+reader.result+")")
             redraw();
         }
-        //reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
         var metaReader = new FileReader();
         metaReader.onload = function(e) {
             console.log(readMetaData(metaReader.result));
