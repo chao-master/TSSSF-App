@@ -167,7 +167,22 @@ function redraw(){
     });
     $("#canvasExport")
         .attr("download",$(".name").text()+".png")
-        .attr("href",addMetaData(CANVAS[0].toDataURL()))
+        .attr("href",MetaData.add(
+            CANVAS[0].toDataURL("image/png"),
+            getSaveInfo()
+        ))
+}
+
+function getSaveInfo(){
+    return {
+        cgv:        "0.1",
+        name:       $(".card .name").text(),
+        attrs:      $(".attrs").val(),
+        effect:     $(".effect").text(),
+        flavour:    $(".flavour").text(),
+        copyright:  $(".copyright").val(),
+        classes:    $(".card").attr("class")
+    }
 }
 
 $(document).ready(function(){

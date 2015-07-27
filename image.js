@@ -18,7 +18,7 @@ $(document).ready(function(){
         reader.readAsDataURL(file);
         var metaReader = new FileReader();
         metaReader.onload = function(e) {
-            console.log(readMetaData(metaReader.result));
+            loadFromInfo(MetaData.get(metaReader.result));
         }
         metaReader.readAsArrayBuffer(file);
     })

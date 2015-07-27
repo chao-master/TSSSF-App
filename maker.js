@@ -25,6 +25,28 @@ $(document).ready(function(){
     $("#errorClear").click(clearErrors)
 })
 
+function loadFromInfo(info){
+    switch(info.cgv){
+        case "0.1":
+            $(".attrs").val(info.attrs);
+            $(".effect").val(info.effect).change();
+            $(".flavour").val(info.flavour).change();
+            $(".copyright").val(info.copyright);
+            $(".card").attr("class",info.classes);
+            $(".card .nameInput").val(info.name).change();
+            break;
+        case undefined:
+            //Do nothing, the text data here praobly isn't a card data.
+            break;
+        default:
+            mayError({
+                error:"Bad card meta data version",
+                details:"The card generator version ("+info.cgv+") is not recognised"
+            });
+            break
+    }
+}
+
 function cardSetup(){
     //On card button clicks, remove other classes and add new ones.
     //Unless it is changeling, special case, just toggle.
