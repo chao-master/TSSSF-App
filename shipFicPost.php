@@ -54,6 +54,8 @@ function imageify(){
     $data = explode(",",$b64);
     fwrite($tmpFile,base64_decode($data[1]));
     fclose($tmpFile);
+    chmod($tmpName,0744);
+    echo $tmpName;
     return $tmpName;
 }
 
@@ -63,16 +65,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         "source" => "",
         "title" => $_POST["name"],
         "tags" => taggify(true,true),
-        "rating" => "q"
+        "rating" => "q",
+        "submit" => "Upload"
     ];
     $destinationUrl = "http://secretshipfic.booru.org/index.php?page=post&s=add";
+    //$destinationUrl = "https://sucs.org/~ripp_/phpEcho.php";
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL,$detinationUrl);
+    curl_setopt($ch, CURLOPT_URL,$destinationUrl);
     curl_setopt($ch, CURLOPT_POST,1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    $result=curl_exec ($ch);
 
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
+
+    $result=curl_exec($ch);
+    var_dump($data);
     var_dump($result);
 } else {
     die(json_encode(Array(
