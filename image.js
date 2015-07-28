@@ -20,6 +20,7 @@ function makeImage(src){
         cWidth = canvas.width,
         cHeight = canvas.height,
         cRatio = cWidth/cHeight;
+    img.crossOrigin = "Anonymous";
     img.onload = function(){
         context.clearRect(0,0,cWidth,cHeight);
         var sWidth = img.width,
@@ -27,7 +28,7 @@ function makeImage(src){
             sRatio = sWidth/sHeight,
             sX = 0, sY = 0;
         if(sRatio > cRatio){ //Image is wider
-            sWidth = sWidth/cRatio;
+            sWidth = sHeight*cRatio;
             sX = (img.width-sWidth)/2;
         } else  { //Image is taller
             sHeight = sWidth/cRatio;
@@ -94,8 +95,8 @@ $(document).ready(function(){
 
     //Get image from website
     $("#submit-webimage").click(function(e){
-        var img = $("#webimage").val()
-        $(".card .image").css("background-image","url("+img+")");
-        redraw();
+        var img = $("#webimage").val();
+        makeImage(img);
+        cardGenerator.redraw();
     })
 })

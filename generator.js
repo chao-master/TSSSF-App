@@ -13,6 +13,15 @@ Generator.prototype.BLEED_AMOUNTS = {
     x:50
 }
 
+Generator.prototype.hasTaintedArtwork = function(){
+    try {
+        var p = this.card.find(".image")[0].getContext("2d").getImageData(0,0,1,1);
+        return false
+    } catch(e) {
+        return (e.code === 18);
+    }
+}
+
 Generator.prototype.drawTextElement = function(element){
     var words = (element.val() || element.text()).match(/\S*\s|\S*$/g),
         lineHeight = element.css("line-height").slice(0,-2)*1,
@@ -59,8 +68,18 @@ Generator.prototype.drawTextElement = function(element){
 }
 
 Generator.prototype.drawImageElement = function (element,after,src){
-    var src = src || (element[0].toDataURL? element[0].toDataURL() : element.css("background-image").slice(4,-1)),
-        position = element.position(),
+    try {
+        var src = src || (element[0].toDataURL? element[0].toDataURL() : element.css("background-image").slice(4,-1));
+    } catch (e) {
+        mayError({
+            error:"Failed to load card art",
+            details:"Check connection and image link, if image otherwise loads normally the website may have CROS disabled."+
+                "Try imgur.com, or the upload option"
+        });
+        if(after){after()}
+        return;
+    }
+    var position = element.position(),
         img = new Image(),
         bgSize = element.css("background-size").match(/([0-9]+)px(?: ([0-9]+)px)?/),
         context = this.canvas[0].getContext("2d");
@@ -107,18 +126,10 @@ Generator.prototype.drawImageElement = function (element,after,src){
         if(after){after()}
     }).error(function(e){
         if (element.hasClass("image")){
-            if (src.substr(0,4) == "http"){
-                mayError({
-                    error:"Failed to load card art",
-                    details:"Check connection and image link, if image otherwise loads normally the website may have CROS disabled."+
-                        "Try imgur.com, or the upload option"
-                })
-            } else {
-                mayError({
-                    error:"Failed to load card art",
-                    details:"Try reselecting the image"
-                })
-            }
+            mayError({
+                error:"Failed to load card art",
+                details:"Try reselecting the image"
+            })
         } else {
             mayError({
                 error:"Failed to load resource",
