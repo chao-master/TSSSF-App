@@ -34,6 +34,11 @@ function loadFromInfo(info){
             $(".copyright").val(info.copyright);
             $(".card").attr("class",info.classes);
             $(".card .nameInput").val(info.name).change();
+            var img = new Image()
+            img.onload = function(){
+                $(".card .image")[0].getContext("2d").drawImage(img,0,0);
+            }
+            img.src = info.imgstrip;
             break;
         case undefined:
             //Do nothing, the text data here praobly isn't a card data.

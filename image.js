@@ -1,9 +1,54 @@
+function extractImage(src,after){
+    var img = new Image(),
+        canvas = $(".card .image")[0];
+        context = canvas.getContext("2d");
+    img.onload = function(){
+        if (img.width == 788){ //nobleed (we hope)
+            context.drawImage(img,-122,-161);
+        } else {
+            context.drawImage(img,-122-50,-161-63);
+        }
+        after();
+    }
+    img.src = src
+}
+
+function makeImage(src){
+    var img = new Image(),
+        canvas = $(".card .image")[0],
+        context = canvas.getContext("2d"),
+        cWidth = canvas.width,
+        cHeight = canvas.height,
+        cRatio = cWidth/cHeight;
+    img.onload = function(){
+        context.clearRect(0,0,cWidth,cHeight);
+        var sWidth = img.width,
+            sHeight = img.height,
+            sRatio = sWidth/sHeight,
+            sX = 0, sY = 0;
+        if(sRatio > cRatio){ //Image is wider
+            sWidth = sWidth/cRatio;
+            sX = (img.width-sWidth)/2;
+        } else  { //Image is taller
+            sHeight = sWidth/cRatio;
+            sY = (img.height-sHeight)/2;
+        }
+        context.drawImage(img,sX,sY,sWidth,sHeight,0,0,cWidth,cHeight);
+    }
+    img.src = src
+}
+
 //Handles the loading & manipulation of the card art. 
 $(document).ready(function(){
     //Add Hidden File Input click cascade
-    $(".card .image .upload").click(function(e){
+    $(".card .imageWrap .upload").click(function(e){
         if (event.which == 1){
             $("#uploadImage").click();
+        }
+    })
+    $("#import").click(function(e){
+        if (event.which == 1){
+            $("#uploadImport").click();
         }
     })
 
@@ -12,13 +57,32 @@ $(document).ready(function(){
         var file = this.files[0];
         var reader = new FileReader();
         reader.onload = function(e) {
-            $(".card .image").css("background-image","url("+reader.result+")")
-            redraw();
+            makeImage(reader.result)
+            cardGenerator.redraw();
         }
         reader.readAsDataURL(file);
+    })
+
+    //Import card
+    $("#uploadImport").change(function(){
+        var file = this.files[0];
         var metaReader = new FileReader();
-        metaReader.onload = function(e) {
-            loadFromInfo(MetaData.get(metaReader.result));
+        metaReader.onload = function() {
+            var info = MetaData.get(metaReader.result)
+            if (info){
+                var reader = new FileReader();
+                reader.onload = function(){
+                    extractImage(reader.result,function(){
+                        loadFromInfo(info)
+                    })
+                }
+                reader.readAsDataURL(file);
+            } else {
+                mayError({
+                    error:"Could not find export data in card image",
+                    details:"Import only works for cards made with this tool, if you wish to import card art use the upload card art button (lower corner of card image)"
+                })
+            }
         }
         metaReader.readAsArrayBuffer(file);
     })
