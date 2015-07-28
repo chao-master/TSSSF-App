@@ -21,12 +21,12 @@ Generator.prototype.drawTextElement = function(element){
         y = element.position().top / this.scale,
         x = element.position().left / this.scale,
         context = this.canvas[0].getContext("2d")
-    
-    if (BLEED){
+
+    if (this.bleed){
         y += this.BLEED_AMOUNTS.x;
         x += this.BLEED_AMOUNTS.y;
     }
-    
+
     context.textAlign = element.css("text-align");
     context.font = element.css("font-size") + " " + element.css("font-family");
     context.fillStyle = element.css("color");
@@ -37,7 +37,7 @@ Generator.prototype.drawTextElement = function(element){
     } else if (context.textAlign == "right") {
         x += width;
     }
-    
+
     for(var i=0;i<words.length;i++){
         var match = words[i].match(/(\S*)(\s|$)/)
         var test = line + match[1]
@@ -64,7 +64,7 @@ Generator.prototype.drawImageElement = function (element,after,src){
         img = new Image(),
         bgSize = element.css("background-size").match(/([0-9]+)px(?: ([0-9]+)px)?/),
         context = this.canvas[0].getContext("2d");
-    
+
     $(img).attr("crossorigin","anonymous");
     if(bgSize){
         var width = bgSize[1]*1,
@@ -80,9 +80,9 @@ Generator.prototype.drawImageElement = function (element,after,src){
     }
     if (element.hasClass("card")){
         position = {top:0,left:0}
-        width = CANVAS[0].width;
-        height = CANVAS[0].height;
-    } else if (BLEED){
+        width = this.canvas[0].width;
+        height = this.canvas[0].height;
+    } else if (this.bleed){
         y += this.BLEED_AMOUNTS.x;
         x += this.BLEED_AMOUNTS.y;
     }
@@ -134,7 +134,8 @@ Generator.prototype.drawImageElement = function (element,after,src){
 Generator.prototype.drawCardElement = function(after){
     var back;
 
-    if (BLEED){
+    //TODO move resizing canvas here
+    if (this.bleed){
         back = "resources/bleed%20templates/BLEED-Blank-$1-bleed.png"
     } else {
         back = "resources/templates/BLEED-Blank-$1-cropped.png"
@@ -154,25 +155,26 @@ Generator.prototype.drawCardElement = function(after){
             details:"Try toggling the card type and trying again"
         })
     }
-    drawImageElement(element,after,back);
+    this.drawImageElement(this.card,after,back);
 }
 
 Generator.prototype.redraw = function(){
     clearErrors();
     $("#working").show()
 
-    var context = canvas[0].getContext("2d");
+    var context = this.canvas[0].getContext("2d"),
+        that = this;
     context.fillStyle = "white";
-    context.fillRect(0,0,canvas.width(),canvas.height())
+    context.fillRect(0,0,this.canvas.width(),this.canvas.height())
 
-    drawCardElement(function(){
-        this.card.find(".name, .attrs, .effect, .flavour, .copyright").each(function(){
-            drawTextElement($(this));
+    this.drawCardElement(function(){
+        that.card.find(".name, .attrs, .effect, .flavour, .copyright").each(function(){
+            that.drawTextElement($(this));
         })
-        drawImageElement(this.card.find(".image"),function(){
+        that.drawImageElement(that.card.find(".image"),function(){
             var toDo = 5;
-            this.card.find(".iconCard,.iconGender,.iconRace,.iconGoal,.iconTime").each(function(){
-                drawImageElement($(this),function(){
+            that.card.find(".iconCard,.iconGender,.iconRace,.iconGoal,.iconTime").each(function(){
+                that.drawImageElement($(this),function(){
                     toDo--;
                     if(!toDo){
                         $("#working").hide()
@@ -190,7 +192,7 @@ Generator.prototype.redraw = function(){
     }
 }
 
-this.Generator.getSaveInfo = function(){
+Generator.prototype.getSaveInfo = function(){
     return {
         cgv:        "0.1",
         name:       this.card.find(".name").text(),
@@ -203,23 +205,29 @@ this.Generator.getSaveInfo = function(){
 }
 
 //TODO object this stuff:
+
+var cardGenerator = new Generator($(".card"),$("#canvasExport"),$("#exportImg"))
+
 $(document).ready(function(){
-    $("#canvasExport").mousedown(redraw);
+
+    cgRedraw = function(){cardGenerator.redraw()}
+
+    $("#canvasExport").mousedown(cgRedraw);
 
     $("#bleedCard").change(function(){
-        BLEED = $("#bleedCard").prop('checked');
-        if (BLEED) {
-            CANVAS[0].width = 889;
-            CANVAS[0].height= 1214;
+        cardGenerator.bleed = $("#bleedCard").prop('checked');
+        if (cardGenerator.bleed) {
+            cardGenerator.canvas[0].width = 889;
+            cardGenerator.canvas[0].height = 1214;
         } else {
-            CANVAS[0].width = 788;
-            CANVAS[0].height= 1088;
+            cardGenerator.canvas[0].width = 788;
+            cardGenerator.canvas[0].height = 1088;
         }
     }).change();
 
-    $("#bleedCard, .card textarea, .card input").change(redraw)
-    $(".card .symbolSelect button").click(redraw)
-    redraw();
+    $("#bleedCard, .card textarea, .card input").change(cgRedraw)
+    $(".card .symbolSelect button").click(cgRedraw)
+    cardGenerator.redraw();
 })
 
 
