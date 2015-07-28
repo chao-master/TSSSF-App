@@ -67,7 +67,7 @@ function cardSetup(){
     //Yes it seems horrible but the alternative was somehting even more horrible!
     $(window).resize(function(){
         var f = ($(".cardwrapper").width())/788;
-        SCALE = f;
+        cardGenerator.scale = f;
         $(".card").css("transform","scale("+f+")")
         $(".cardwrapper").height(1088*f);
     });
