@@ -167,6 +167,17 @@ Generator.prototype.redraw = function(){
     context.fillStyle = "white";
     context.fillRect(0,0,this.canvas.width(),this.canvas.height())
 
+    function afterAll(){
+        if (that.exportLink){
+            that.exportLink.attr("download",that.card.find(".name").text()+".png")
+                .attr("href",MetaData.add(
+                    that.canvas[0].toDataURL("image/png"),
+                    that.getSaveInfo()
+                ))
+        }
+    }
+
+
     this.drawCardElement(function(){
         that.card.find(".name, .attrs, .effect, .flavour, .copyright").each(function(){
             that.drawTextElement($(this));
@@ -178,18 +189,12 @@ Generator.prototype.redraw = function(){
                     toDo--;
                     if(!toDo){
                         $("#working").hide()
+                        afterAll()
                     }
                 });
             })
         })
     });
-    if (this.exportLink){
-        this.exportLink.attr("download",this.card.find(".name").text()+".png")
-            .attr("href",MetaData.add(
-                this.canvas[0].toDataURL("image/png"),
-                this.getSaveInfo()
-            ))
-    }
 }
 
 Generator.prototype.getSaveInfo = function(){
