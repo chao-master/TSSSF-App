@@ -209,8 +209,8 @@ Generator.prototype.getSaveInfo = function(){
         cgv:        "0.1",
         name:       this.card.find(".name").text(),
         attrs:      this.card.find(".attrs").val(),
-        effect:     this.card.find(".effect").text(),
-        flavour:    this.card.find(".flavour").text(),
+        effect:     this.card.find(".effect").val(),
+        flavour:    this.card.find(".flavour").val(),
         copyright:  this.card.find(".copyright").val(),
         classes:    this.card.attr("class"),
         imgstrip:   cvs.toDataURL()
