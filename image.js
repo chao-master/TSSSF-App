@@ -1,4 +1,4 @@
-//Handles the loading & manipulation of the card art.
+//Handles the loading & manipulation of the card art. 
 $(document).ready(function(){
     //Add Hidden File Input click cascade
     $(".card .image .upload").click(function(e){
@@ -12,11 +12,15 @@ $(document).ready(function(){
         var file = this.files[0];
         var reader = new FileReader();
         reader.onload = function(e) {
-			console.log(reader);
             $(".card .image").css("background-image","url("+reader.result+")")
             redraw();
         }
         reader.readAsDataURL(file);
+        var metaReader = new FileReader();
+        metaReader.onload = function(e) {
+            loadFromInfo(MetaData.get(metaReader.result));
+        }
+        metaReader.readAsArrayBuffer(file);
     })
 
     //Autofocus URL field on popup

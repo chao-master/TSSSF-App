@@ -148,6 +148,11 @@
                                         <input type="checkbox" id="bleedCard"> Add card bleed
                                     </label>
                                 </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="supressInfo"> Don't add machine readable card data
+                                    </label>
+                                </div>
                             </div>
 
                             <ul id="error" style="display:none">
@@ -214,6 +219,7 @@
         <script src="maker.js"></script>
         <script src="generator.js"></script>
         <script src="image.js"></script>
+        <script src="metaData.js"></script>
         <script>
             $(document).ready(function() {
                 if('ontouchstart' in window){
