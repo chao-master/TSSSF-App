@@ -22,7 +22,7 @@
             #exportImg {
                 display:none;
             }
-            #uploadImage{
+            #uploadImage, #uploadImport{
                 display:none;
             }
             #error {
@@ -67,7 +67,8 @@
                             <div class="card pony maleFemale unicorn s0">
                                 <input type="text" class="nameInput" placeholder="Card Name" required/>
                                 <div class="name"></div>
-                                <div class="image">
+                                <canvas class="image" width="601px" height="444px"></canvas>
+                                <div class="imageWrap">
                                     <button class="upload"><i class="fa fa-fw fa-upload"></i></button>
                                     <button class="webimage" data-toggle="modal" data-target="#webimage-dialog">
                                         <i class="fa fa-fw fa-globe"></i>
@@ -126,6 +127,7 @@
                                 Please report any issues to the <a href="https://github.com/chao-master/TSSSF-App/issues">issue tracker</a>
                             </p>
                             <input id="uploadImage" type="file" accept="image/"/>
+                            <input id="uploadImport" type="file" accept="image/png"/>
 
                             <div class="btn-group">
                                 <a id="canvasExport" class="btn btn-success">Export
@@ -136,6 +138,10 @@
                                 </button>
                             </div>
 
+                            <button type="button" class="btn btn-primary" id="import">
+                                Import Card
+                            </button>
+    
                             <button type="button" class="btn btn-warning" id="errorClear" style="display:none">
                                 Clear errors
                             </button>

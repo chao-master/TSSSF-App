@@ -127,17 +127,19 @@
     }
 
 /* Card Image */
-    .card .image {
+    .card .imageWrap {
         position:absolute;
         left: 122px;
         top:  161px;
         width: 601px;
         height: 444px;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
     }
-    .card .image button {
+    .card .image {
+        position:absolute;
+        left:122px;
+        top:161px;
+    }
+    .card .imageWrap button {
         font-size:50px;
         position:relative;
         float:right;
@@ -146,7 +148,7 @@
         display:none;
         background:rgba(255,255,255,0.6);
     }
-    .card .image:hover button, .touch .card .image button{
+    .card .imageWrap:hover button, .touch .card .imageWrap button{
         display:block;
     }
 
