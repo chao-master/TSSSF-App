@@ -8,6 +8,7 @@
         <link href="css/material-wfont.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="cardStyling.css" rel="stylesheet">
+        <link href="iconMaker.css" rel="stylesheet">
         <style>
             .controls {
                 font-family: cabin;
@@ -58,8 +59,17 @@
           </div>
         </div>
 
-        <main class="clearAfter container">
+        <div id="iconmaker-dialog" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <main class="clearAfter container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel">
@@ -140,6 +150,10 @@
 
                             <button type="button" class="btn btn-primary" id="import">
                                 Import Card
+                            </button>
+    
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#iconmaker-dialog">
+                                Icon Maker
                             </button>
     
                             <button type="button" class="btn btn-warning" id="errorClear" style="display:none">

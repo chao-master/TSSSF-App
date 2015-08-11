@@ -1,0 +1,11 @@
+.iconPicker .iconGrid button {
+    margin:2px;
+    padding:1px;
+}
+.iconPicker .selIcons button {
+    padding:8px;
+}
+.iconPicker .selIcons button:first-child{
+    border-right: 1px solid gray;
+}
+
