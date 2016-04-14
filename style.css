@@ -1,0 +1,17 @@
+
+main{
+  display: flex;
+  flex-flow:row wrap;
+  justify-content: center;
+}
+main>*{
+    padding:8px;
+    max-width:788px;
+    flex: 1 0 500px;
+}
+.modal{
+  display: none;
+}
+.card{
+  position:absolute;
+}

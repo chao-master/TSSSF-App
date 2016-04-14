@@ -3,11 +3,12 @@
     <head>
         <title>TSSSFF Card Generator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/ripples.min.css" rel="stylesheet">
-        <link href="css/material-wfont.min.css" rel="stylesheet">
+        <link href="css/material-wfont.min.css" rel="stylesheet"-->
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="cardStyling.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
         <style>
             .controls {
                 font-family: cabin;
@@ -59,162 +60,156 @@
         </div>
 
         <main class="clearAfter container">
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="panel">
-                        <div class="panel-body cardwrapper">
-                            <div class="card pony maleFemale unicorn s0">
-                                <input type="text" class="nameInput" placeholder="Card Name" required/>
-                                <div class="name"></div>
-                                <canvas class="image" width="601px" height="444px"></canvas>
-                                <div class="imageWrap">
-                                    <button class="upload"><i class="fa fa-fw fa-upload"></i></button>
-                                    <button class="webimage" data-toggle="modal" data-target="#webimage-dialog">
-                                        <i class="fa fa-fw fa-globe"></i>
-                                    </button>
-                                </div>
-                                <div class="iconCard"></div>
-                                <div class="iconGender symbolSelect">
-                                    <button class="symbol" value="female"></button>
-                                    <button class="symbol" value="male"></button>
-                                    <button class="symbol" value="maleFemale"></button>
-                                    <button class="symbol blank" value="G"></button>
-                                </div>
-                                <div class="iconRace symbolSelect">
-                                    <button class="symbol" value="unicorn"></button>
-                                    <button class="symbol" value="pegasus"></button>
-                                    <button class="symbol" value="earthPony"></button>
-                                    <button class="symbol" value="alicorn"></button>
-                                    <button class="symbol" value="changeling"></button>
-                                    <button class="symbol blank" value="R"></button>
-                                </div>
-                                <div class="type">
-                                    <button value="pony"></button>
-                                    <button value="ship"></button>
-                                    <button value="goal"></button>
-                                    <button value="start"></button>
-                                </div>
-                                <input type="text" class="attrs" placeholder="Attributes"/>
-                                <textarea class="effect" placeholder="Effect" required></textarea>
-                                <textarea class="flavour" placeholder="Flavour Text" required></textarea>
-                                <div class="iconGoal symbolSelect">
-                                    <button class="symbol" value="s0"></button>
-                                    <button class="symbol" value="s1"></button>
-                                    <button class="symbol" value="s2"></button>
-                                    <button class="symbol" value="s3"></button>
-                                </div>
-                                <div class="iconTime symbolSelect">
-                                    <button class="symbol" value="time"></button>
-                                    <button class="symbol" value=""></button>
-                                </div>
-                                <input type="text" class="copyright" value="TSSSF made by Horrible People Games; Art by Unknown;" placeholder="Copyright &amp; Artist infomation" required/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="panel-body cardwrapper"><!--Start of pony card-->
+              <div class="card pony maleFemale unicorn s0">
+                  <input type="text" class="nameInput" placeholder="Card Name" required/>
+                  <div class="name"></div>
+                  <canvas class="image" width="601px" height="444px"></canvas>
+                  <div class="imageWrap">
+                      <button class="upload"><i class="fa fa-fw fa-upload"></i></button>
+                      <button class="webimage" data-toggle="modal" data-target="#webimage-dialog">
+                          <i class="fa fa-fw fa-globe"></i>
+                      </button>
+                  </div>
+                  <div class="iconCard"></div>
+                  <div class="iconGender symbolSelect">
+                      <button class="symbol" value="female"></button>
+                      <button class="symbol" value="male"></button>
+                      <button class="symbol" value="maleFemale"></button>
+                      <button class="symbol blank" value="G"></button>
+                  </div>
+                  <div class="iconRace symbolSelect">
+                      <button class="symbol" value="unicorn"></button>
+                      <button class="symbol" value="pegasus"></button>
+                      <button class="symbol" value="earthPony"></button>
+                      <button class="symbol" value="alicorn"></button>
+                      <button class="symbol" value="changeling"></button>
+                      <button class="symbol blank" value="R"></button>
+                  </div>
+                  <div class="type">
+                      <button value="pony"></button>
+                      <button value="ship"></button>
+                      <button value="goal"></button>
+                      <button value="start"></button>
+                  </div>
+                  <input type="text" class="attrs" placeholder="Attributes"/>
+                  <textarea class="effect" placeholder="Effect" required></textarea>
+                  <textarea class="flavour" placeholder="Flavour Text" required></textarea>
+                  <div class="iconGoal symbolSelect">
+                      <button class="symbol" value="s0"></button>
+                      <button class="symbol" value="s1"></button>
+                      <button class="symbol" value="s2"></button>
+                      <button class="symbol" value="s3"></button>
+                  </div>
+                  <div class="iconTime symbolSelect">
+                      <button class="symbol" value="time"></button>
+                      <button class="symbol" value=""></button>
+                  </div>
+                  <input type="text" class="copyright" value="TSSSF made by Horrible People Games; Art by Unknown;" placeholder="Copyright &amp; Artist infomation" required/>
+              </div>
+          </div><!--End of pony card-->
 
 
-                <div class="controls col-md-6">
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <h1><abbr title="Twilight Sparkle's Secret Shipfic Folder">TSSSF</abbr> Card App</h1>
-                        </div>
-                        <div class="panel-body">
-                            <p>
-                                <em>Beta</em> By <a href="https://twitter.com/Ripp_">@Ripp_</a><br/>
-                                Feel free to check out and fork the source on <a href="https://github.com/chao-master/TSSSF-App">github</a><br/>
-                                Please report any issues to the <a href="https://github.com/chao-master/TSSSF-App/issues">issue tracker</a>
-                            </p>
-                            <input id="uploadImage" type="file" accept="image/"/>
-                            <input id="uploadImport" type="file" accept="image/png"/>
 
-                            <div class="btn-group">
-                                <a id="canvasExport" class="btn btn-success">Export
-                                    <canvas id="exportImg" width="788" height="1088"></canvas>
-                                </a>
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="collapse" data-target="#advanceExport">
-                                    <span class="caret"></span>
-                                </button>
-                            </div>
+          <div class="controls">
+              <div class="panel">
+                  <div class="panel-heading">
+                      <h1><abbr title="Twilight Sparkle's Secret Shipfic Folder">TSSSF</abbr> Card App</h1>
+                  </div>
+                  <div class="panel-body">
+                      <p>
+                          <em>Beta</em> By <a href="https://twitter.com/Ripp_">@Ripp_</a><br/>
+                          Feel free to check out and fork the source on <a href="https://github.com/chao-master/TSSSF-App">github</a><br/>
+                          Please report any issues to the <a href="https://github.com/chao-master/TSSSF-App/issues">issue tracker</a>
+                      </p>
+                      <input id="uploadImage" type="file" accept="image/"/>
+                      <input id="uploadImport" type="file" accept="image/png"/>
 
-                            <button type="button" class="btn btn-primary" id="import">
-                                Import Card
-                            </button>
-    
-                            <button type="button" class="btn btn-warning" id="errorClear" style="display:none">
-                                Clear errors
-                            </button>
+                      <div class="btn-group">
+                          <a id="canvasExport" class="btn btn-success">Export
+                              <canvas id="exportImg" width="788" height="1088"></canvas>
+                          </a>
+                          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="collapse" data-target="#advanceExport">
+                              <span class="caret"></span>
+                          </button>
+                      </div>
 
-                            <i id="working" class="fa fa-cog fa-spin fa-3x" style="display:none;vertical-align:middle;"></i>
+                      <button type="button" class="btn btn-primary" id="import">
+                          Import Card
+                      </button>
 
-                            <div class="panel-collapse collapse" id="advanceExport">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="bleedCard"> Add card bleed
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="supressInfo"> Don't add machine readable card data
-                                    </label>
-                                </div>
-                            </div>
+                      <button type="button" class="btn btn-warning" id="errorClear" style="display:none">
+                          Clear errors
+                      </button>
 
-                            <ul id="error" style="display:none">
-                            </ul>
+                      <i id="working" class="fa fa-cog fa-spin fa-3x" style="display:none;vertical-align:middle;"></i>
 
-                            <br>
-                            Symbols and Powers Guide:
-                            <div class=row>
-                                <div class="col-xs-6">
-                                    <dl class="dl-horizontal icon-list">
-                                        <dt>&#x2642;</dt> <dd>\male</dd>
-                                        <dt>&#x2640;</dt> <dd>\female</dd>
-                                        <dt>&#x26A4;</dt> <dd>\malefemale</dd>
-                                        <dt>&#x2764;</dt> <dd>\ship</dd>
-                                        <dt>&#xE000;</dt> <dd>\earth</dd>
-                                        <dt>&#xE001;</dt> <dd>\unicorn</dd>
-                                        <dt>&#xE002;</dt> <dd>\pegasus</dd>
-                                        <dt>&#xE003;</dt> <dd>\alicorn</dd>
-                                        <dt>&#xE004;</dt> <dd>\time</dd>
-                                    </dl>
-                                </div>
-                                <div class="col-xs-6">
-                                    <dl class="dl-horizontal">
-                                        <!--We will replace the long unwieldy hints in code before setting them as tooltips-->
-                                        <dt data-original-title="\replace" data-placement="left">(Replace)</dt>
-                                            <dd>\replace</dd>
-                                        <dt data-original-title="\swap" data-placement="left">(Swap)</dt>
-                                            <dd>\swap</dd>
-                                        <dt data-original-title="\draw" data-placement="left">(Draw)</dt>
-                                            <dd>\draw</dd>
-                                        <dt data-original-title="\newgoal" data-placement="left">(New Goal)</dt>
-                                            <dd>\newgoal</dd>
-                                        <dt data-original-title="\search" data-placement="left">(Search)</dt>
-                                            <dd>\search</dd>
-                                        <dt data-original-title="\copy" data-placement="left">(Copy)</dt>
-                                            <dd>\copy</dd>
-                                        <dt data-original-title="\changeling" data-placement="left">Changeling</dt>
-                                            <dd>\changeling</dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            (Symbols and powers update when you deselect the field. Powers add the whole description to the card. Hover over each power for it's full description.)
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        This project is not associated with or necessarily endorsed by HORRIBLE PEOPLE PRODUCTIONS, the creators of Twilight Sparkle's Secret Shipfic Folder. <br/>
-                        For more information about the game, please visit <a href="http://tsssf-tcg.tumblr.com/">The offical Twilight Sparkle's Secret Shipfic Folder site</a>
-                    <br/>
-                        Issues &amp; notes:
-                        <ul>
-                            <li>Export positions text slightly wrong, less of an issue on chrome.</li>
-                            <li>Export will not work with images from all site due to browser security.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                      <div class="panel-collapse collapse" id="advanceExport">
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" id="bleedCard"> Add card bleed
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" id="supressInfo"> Don't add machine readable card data
+                              </label>
+                          </div>
+                      </div>
+
+                      <ul id="error" style="display:none">
+                      </ul>
+
+                      <br>
+                      Symbols and Powers Guide:
+                      <div class=row>
+                          <div class="col-xs-6">
+                              <dl class="dl-horizontal icon-list">
+                                  <dt>&#x2642;</dt> <dd>\male</dd>
+                                  <dt>&#x2640;</dt> <dd>\female</dd>
+                                  <dt>&#x26A4;</dt> <dd>\malefemale</dd>
+                                  <dt>&#x2764;</dt> <dd>\ship</dd>
+                                  <dt>&#xE000;</dt> <dd>\earth</dd>
+                                  <dt>&#xE001;</dt> <dd>\unicorn</dd>
+                                  <dt>&#xE002;</dt> <dd>\pegasus</dd>
+                                  <dt>&#xE003;</dt> <dd>\alicorn</dd>
+                                  <dt>&#xE004;</dt> <dd>\time</dd>
+                              </dl>
+                          </div>
+                          <div class="col-xs-6">
+                              <dl class="dl-horizontal">
+                                  <!--We will replace the long unwieldy hints in code before setting them as tooltips-->
+                                  <dt data-original-title="\replace" data-placement="left">(Replace)</dt>
+                                      <dd>\replace</dd>
+                                  <dt data-original-title="\swap" data-placement="left">(Swap)</dt>
+                                      <dd>\swap</dd>
+                                  <dt data-original-title="\draw" data-placement="left">(Draw)</dt>
+                                      <dd>\draw</dd>
+                                  <dt data-original-title="\newgoal" data-placement="left">(New Goal)</dt>
+                                      <dd>\newgoal</dd>
+                                  <dt data-original-title="\search" data-placement="left">(Search)</dt>
+                                      <dd>\search</dd>
+                                  <dt data-original-title="\copy" data-placement="left">(Copy)</dt>
+                                      <dd>\copy</dd>
+                                  <dt data-original-title="\changeling" data-placement="left">Changeling</dt>
+                                      <dd>\changeling</dd>
+                              </dl>
+                          </div>
+                      </div>
+                      (Symbols and powers update when you deselect the field. Powers add the whole description to the card. Hover over each power for it's full description.)
+                  </div>
+              </div>
+              <div class="panel-footer">
+                  This project is not associated with or necessarily endorsed by HORRIBLE PEOPLE PRODUCTIONS, the creators of Twilight Sparkle's Secret Shipfic Folder. <br/>
+                  For more information about the game, please visit <a href="http://tsssf-tcg.tumblr.com/">The offical Twilight Sparkle's Secret Shipfic Folder site</a>
+              <br/>
+                  Issues &amp; notes:
+                  <ul>
+                      <li>Export positions text slightly wrong, less of an issue on chrome.</li>
+                      <li>Export will not work with images from all site due to browser security.</li>
+                  </ul>
+              </div>
+          </div>
         </main>
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
