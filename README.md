@@ -3,7 +3,7 @@
 A Fork of the web dependent [TSSSF-Generator](https://github.com/chao-master/TSSSFF-Generator)
 
 ##Using
-A [live version](http://ripppo.me/TSSSF-App) can be found on my website.
+A [live version](https://sucs.org/~ripp_/TSSSF-App/) can be found on my website.
 The tool is mostly self explanitory but:
  * Click and type on each field to edit them.
  * Hover over (or tap if on mobile) the Icons to get to change them.
