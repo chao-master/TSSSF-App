@@ -50,7 +50,7 @@
         height: 1088px;
         background-size: contain;
         background-repeat: no-repeat;
-        position:relative;
+        position:absolute;
         -webkit-transform-origin:0 0;
         -ms-transform-origin:0 0;
         transform-origin:0 0;

@@ -11,25 +11,25 @@ function Generator(card,exportLink,canvas,scale,bleed){
 Generator.prototype.BLEED_AMOUNTS = {
     y:63,
     x:50
-}
+};
 
 Generator.prototype.hasTaintedArtwork = function(){
     try {
         var p = this.card.find(".image")[0].getContext("2d").getImageData(0,0,1,1);
-        return false
+        return false;
     } catch(e) {
         return (e.code === 18);
     }
-}
+};
 
 Generator.prototype.drawTextElement = function(element){
     var words = (element.val() || element.text()).match(/\S*\s|\S*$/g),
         lineHeight = element.css("line-height").slice(0,-2)*1,
-        line = ""
+        line = "";
         width = element.width(),
         y = element.position().top / this.scale,
         x = element.position().left / this.scale,
-        context = this.canvas[0].getContext("2d")
+        context = this.canvas[0].getContext("2d");
 
     if (this.bleed){
         y += this.BLEED_AMOUNTS.x;
@@ -48,9 +48,9 @@ Generator.prototype.drawTextElement = function(element){
     }
 
     for(var i=0;i<words.length;i++){
-        var match = words[i].match(/(\S*)(\s|$)/)
-        var test = line + match[1]
-        var join = match[2]
+        var match = words[i].match(/(\S*)(\s|$)/);
+        var test = line + match[1];
+        var join = match[2];
         if (context.measureText(test).width > width){
             context.fillText(line,x,y);
             line = words[i];
@@ -65,40 +65,41 @@ Generator.prototype.drawTextElement = function(element){
         }
     }
     context.fillText(line,x,y);
-}
+};
 
 Generator.prototype.drawImageElement = function (element,after,src){
     try {
-        var src = src || (element[0].toDataURL? element[0].toDataURL() : element.css("background-image").slice(4,-1));
+        src = src || (element[0].toDataURL? element[0].toDataURL() : element.css("background-image").slice(4,-1));
     } catch (e) {
         mayError({
             error:"Failed to load card art",
             details:"Check connection and image link, if image otherwise loads normally the website may have CROS disabled."+
                 "Try imgur.com, or the upload option"
         });
-        if(after){after()}
+        if(after){after();}
         return;
     }
     var position = element.position(),
         img = new Image(),
         bgSize = element.css("background-size").match(/([0-9]+)px(?: ([0-9]+)px)?/),
-        context = this.canvas[0].getContext("2d");
+        context = this.canvas[0].getContext("2d"),
+        width, height;
 
     $(img).attr("crossorigin","anonymous");
     if(bgSize){
-        var width = bgSize[1]*1,
-            height = (bgSize[2] || bgSize[1])*1;
+        width = bgSize[1]*1;
+        height = (bgSize[2] || bgSize[1])*1;
     } else {
-        var width = element.innerWidth(),
-            height = element.innerHeight();
+        width = element.innerWidth();
+        height = element.innerHeight();
     }
-    position.top /= this.scale
-    position.left /= this.scale
+    position.top /= this.scale;
+    position.left /= this.scale;
     if (src.substr(0,1) == '"' || src.substr(0,1) == "'"){
-        src = src.slice(1,-1)
+        src = src.slice(1,-1);
     }
     if (element.hasClass("card")){
-        position = {top:0,left:0}
+        position = {top:0,left:0};
         width = this.canvas[0].width;
         height = this.canvas[0].height;
     } else if (this.bleed){
@@ -106,7 +107,7 @@ Generator.prototype.drawImageElement = function (element,after,src){
         x += this.BLEED_AMOUNTS.y;
     }
     if (!src){
-        if(after){after()}
+        if(after){after();}
         return;
     }
     $(img).load(function() {
@@ -114,42 +115,42 @@ Generator.prototype.drawImageElement = function (element,after,src){
             sHeight = img.height,
             sX = 0, sY = 0,
             dRatio = width/height,
-            sRatio = sWidth/sHeight
+            sRatio = sWidth/sHeight;
         if (sRatio > dRatio){ //Image is wider
             sWidth = sHeight*dRatio;
-            sX = (img.width-sWidth)/2
+            sX = (img.width-sWidth)/2;
         } else { //Image is taller
             sHeight = sWidth/dRatio;
-            sY = (img.height-sHeight)/2
+            sY = (img.height-sHeight)/2;
         }
         context.drawImage(img,sX,sY,sWidth,sHeight,position.left,position.top,width,height);
-        if(after){after()}
+        if(after){after();}
     }).error(function(e){
         if (element.hasClass("image")){
             mayError({
                 error:"Failed to load card art",
                 details:"Try reselecting the image"
-            })
+            });
         } else {
             mayError({
                 error:"Failed to load resource",
                 details:"Resource for "+element.attr("class").match(/[^ ]+/)+" not found. Check connection and try again."
-            })
+            });
         }
-        if(after){after()}
+        if(after){after();}
         return false;
-    })
-    img.src = src
-}
+    });
+    img.src = src;
+};
 
 Generator.prototype.drawCardElement = function(after){
     var back;
 
     //TODO move resizing canvas here
     if (this.bleed){
-        back = "resources/bleed%20templates/BLEED-Blank-$1-bleed.png"
+        back = "resources/bleed%20templates/BLEED-Blank-$1-bleed.png";
     } else {
-        back = "resources/templates/BLEED-Blank-$1-cropped.png"
+        back = "resources/templates/BLEED-Blank-$1-cropped.png";
     }
 
     if (this.card.hasClass("goal")) {
@@ -164,19 +165,19 @@ Generator.prototype.drawCardElement = function(after){
         mayError({
             error:"Bad card type",
             details:"Try toggling the card type and trying again"
-        })
+        });
     }
     this.drawImageElement(this.card,after,back);
-}
+};
 
 Generator.prototype.redraw = function(){
     clearErrors();
-    $("#working").show()
+    $("#working").show();
 
     var context = this.canvas[0].getContext("2d"),
         that = this;
     context.fillStyle = "white";
-    context.fillRect(0,0,this.canvas.width(),this.canvas.height())
+    context.fillRect(0,0,this.canvas.width(),this.canvas.height());
 
     function afterAll(){
         if (that.exportLink){
@@ -184,7 +185,7 @@ Generator.prototype.redraw = function(){
                 .attr("href",MetaData.add(
                     that.canvas[0].toDataURL("image/png"),
                     that.getSaveInfo()
-                ))
+                ));
         }
     }
 
@@ -192,26 +193,26 @@ Generator.prototype.redraw = function(){
     this.drawCardElement(function(){
         that.card.find(".name, .attrs, .effect, .flavour, .copyright").each(function(){
             that.drawTextElement($(this));
-        })
+        });
         that.drawImageElement(that.card.find(".image"),function(){
             var toDo = 5;
             that.card.find(".iconCard,.iconGender,.iconRace,.iconGoal,.iconTime").each(function(){
                 that.drawImageElement($(this),function(){
                     toDo--;
                     if(!toDo){
-                        $("#working").hide()
-                        afterAll()
+                        $("#working").hide();
+                        afterAll();
                     }
                 });
-            })
-        })
+            });
+        });
     });
-}
+};
 
 Generator.prototype.getSaveInfo = function(){
     var cvs = $("<canvas>")[0],
         ctx = cvs.getContext("2d"),
-        img = this.card.find(".image")[0]
+        img = this.card.find(".image")[0];
     cvs.height = img.height;
     cvs.width = 60;
     ctx.drawImage(img,0,0);
@@ -225,16 +226,16 @@ Generator.prototype.getSaveInfo = function(){
         copyright:  this.card.find(".copyright").val(),
         classes:    this.card.attr("class"),
         imgstrip:   cvs.toDataURL()
-    }
-}
+    };
+};
 
 //TODO object this stuff:
 
-var cardGenerator = new Generator($(".card"),$("#canvasExport"),$("#exportImg"))
+var cardGenerator = new Generator($(".card"),$("#canvasExport"),$("#exportImg"));
 
 $(document).ready(function(){
 
-    cgRedraw = function(){cardGenerator.redraw()}
+    cgRedraw = function(){cardGenerator.redraw();};
 
     $("#canvasExport").mousedown(cgRedraw);
 
@@ -249,7 +250,7 @@ $(document).ready(function(){
         }
     }).change();
 
-    $("#bleedCard, .card textarea, .card input").change(cgRedraw)
-    $(".card .symbolSelect button").click(cgRedraw)
+    $("#bleedCard, .card textarea, .card input").change(cgRedraw);
+    $(".card .symbolSelect button").click(cgRedraw);
     cardGenerator.redraw();
-})
+});
