@@ -1,9 +1,13 @@
 language: python
 python: "3.2"
+before_install:
+  - "phantomjs --version"
 before_script:
   - python -m http.server &
   - cd tests
   - mkdir results
   - sleep 3
 script:
-  - phantomjs renderCard.js test1 http://localhost:8000
+  - phantomjs renderCard.js test1 http://localhost:8000b
+  - echo "Test done, killing server"
+  - kill -- -$PGID
