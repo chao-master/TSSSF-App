@@ -6,6 +6,7 @@ var config;
 
 if(system.args.length < 3){
   console.log("usage phantomjs renderCard.js [config] [URL]");
+  phatom.exit(1);
 } else {
   configLoc = system.args[1];
   config = require("./"+configLoc+".json");

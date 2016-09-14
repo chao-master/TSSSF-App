@@ -1,5 +1,7 @@
 before_script:
+  - rackup
   - cd tests
   - mkdir results
+  - sleep 3
 script:
   - phantomjs renderCard.js test1
