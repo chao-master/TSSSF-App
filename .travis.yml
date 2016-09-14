@@ -1,5 +1,7 @@
+language: python
+python: "3.2"
 before_script:
-  - bundle exec rackup &
+  - python -m http.server &
   - cd tests
   - mkdir results
   - sleep 3
