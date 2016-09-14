@@ -17,7 +17,7 @@ if(system.args.length < 3){
 function saveResult(result){
   fs.write("results/"+configLoc+".html","<img src='"+result+"'/>");
   phantomMsg("Result saved");
-  phantom.exit(1);
+  phantom.exit(0);
 }
 function makeCard(){
   var cg = new CardGenerator(document.querySelector(".card"));
