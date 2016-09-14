@@ -1,0 +1,2 @@
+script:
+- phantomJs renderCard.js test1
