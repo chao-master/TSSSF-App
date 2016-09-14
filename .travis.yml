@@ -1,2 +1,6 @@
+before_script:
+  - cd tests
+  - mkdir results
 script:
-- phantomjs renderCard.js test1
+  - phantomjs renderCard.js test1
+x
