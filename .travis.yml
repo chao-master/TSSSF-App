@@ -1,2 +1,2 @@
 script:
-- phantomJs renderCard.js test1
+- phantomjs renderCard.js test1
