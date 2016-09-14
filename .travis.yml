@@ -1,5 +1,5 @@
 before_script:
-  - python -m SimpleHttpServer 8000 &
+  - bundle exec rackup &
   - cd tests
   - mkdir results
   - sleep 3
