@@ -5,7 +5,7 @@ var configLoc;
 var config;
 
 if(system.args.length < 3){
-  console.log("usage phantomjs renderCard.js [config] [URL]");
+  phanomError("usage phantomjs renderCard.js [config] [URL]");
   phatom.exit(1);
 } else {
   configLoc = system.args[1];
@@ -16,7 +16,8 @@ if(system.args.length < 3){
 
 function saveResult(result){
   fs.write("results/"+configLoc+".html","<img src='"+result+"'/>");
-  console.log("\x1B[39mresult saved");
+  phantomMsg("Result saved");
+  phantom.exit(1);
 }
 function makeCard(){
   var cg = new CardGenerator(document.querySelector(".card"));
@@ -26,15 +27,11 @@ function makeCard(){
 }
 
 
-function onConsoleMessage(msg){
-  console.log("\x1B[34m%s",msg);
-}
-
 function onError(msg,trace){
-  console.error("\x1B[31mUncaught error:",msg);
+  pageError(msg);
   if(trace && trace.length){
     trace.forEach(function(t){
-      console.error("\t%s: %i %s \x1B",t.file || t.sourceURL,t.line,t.function ? ' (in function ' + t.function +')' : '');
+      pageError("\t",t.file || t.sourceURL,t.line,t.function ? ' (in function ' + t.function +')' : '');
     });
   }
 }
@@ -45,7 +42,7 @@ function polyfill(page){
 function open(url){
   page.open(url,function(status){
     if (status !== "success") {
-        console.error("\x1B[33mUnable to access network",status);
+        phantomError("Unable to access network",status);
         phantom.exit(1);
     } else {
       polyfill(page);
@@ -54,6 +51,19 @@ function open(url){
   });
 }
 
-page.onConsoleMessage = onConsoleMessage;
+function pageError(){
+  console.log("\x1B[33m"+Array.apply(null, arguments).join(" ")+"\x1B[0m");
+}
+function pageMessage(){
+  console.log("\x1B[34m"+Array.apply(null, arguments).join(" ")+"\x1B[0m");
+}
+function phantomError(){
+  console.log("\x1B[31m"+Array.apply(null, arguments).join(" ")+"\x1B[0m");
+}
+function phantomMsg(){
+  console.log("\x1B[39m"+Array.apply(null, arguments).join(" ")+"\x1B[0m");
+}
+
+page.onConsoleMessage = pageMessage;
 page.onError = onError;
 page.onCallback = saveResult;
