@@ -220,6 +220,7 @@
       if('ontouchstart' in window){
         document.querySelector("body").classList.add("touch");
       }
+      var cardGenerator = new CardGenerator(document.querySelector(".card"));
       cardSetup();
     </script>
 

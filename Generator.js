@@ -130,6 +130,10 @@ var Generator = (function(){
       var generator = this;
       return this.fetchImage(src).then(function(img){
         generator.drawImage(img,x,y,width,height);
+      }).catch(function(e){
+        if (e == "No image source"){
+          return Promise.reject(e+" defined for ["+element.getAttribute("class")+"]");
+        }
       });
   };
   return Generator;

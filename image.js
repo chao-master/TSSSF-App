@@ -14,6 +14,7 @@ function extractImage(src,after){
 }
 
 function makeImage(src){
+    console.log("updating image");
     var img = new Image(),
         canvas = $(".card .image")[0],
         context = canvas.getContext("2d"),
@@ -35,6 +36,11 @@ function makeImage(src){
             sY = (img.height-sHeight)/2;
         }
         context.drawImage(img,sX,sY,sWidth,sHeight,0,0,cWidth,cHeight);
+        cardGenerator.generateCard();
+        console.log("image updated");
+    };
+    img.onerror = function(e){
+      console.error("error loading image",src.substr(0,30));
     };
     img.src = src;
 }
@@ -55,11 +61,11 @@ $(document).ready(function(){
 
     //Upload image
     $("#uploadImage").change(function(){
+        console.log("updating imgae");
         var file = this.files[0];
         var reader = new FileReader();
         reader.onload = function(e) {
             makeImage(reader.result);
-            cardGenerator.redraw();
         };
         reader.readAsDataURL(file);
     });

@@ -13,17 +13,62 @@ if(system.args.length < 3){
   open(system.args[2]);
 }
 
-
 function saveResult(result){
-  fs.write("results/"+configLoc+".html","<img src='"+result+"'/>");
-  phantomMsg("Result saved");
-  phantom.exit(0);
+  if("result" in result){
+    fs.write("results/"+configLoc+".png",atob(result.result),"b");
+    page.render("results/"+configLoc+"-snap.png");
+    phantomMsg("Result saved");
+    phantom.exit(0);
+  } else {
+    phantomError("generate failed",JSON.stringify(result));
+    phantom.exit(1);
+  }
 }
-function makeCard(){
-  var cg = new CardGenerator(document.querySelector(".card"));
-  cg.generateCard().then(function(){
-    window.callPhantom(cg.canvas.toDataURL());
-  });
+
+function makeCard(config){
+  console.log("Setting card values");
+  if ("title" in config){
+    document.querySelector(".nameInput").value = config.title;
+  }
+  if ("type" in config){
+    document.querySelector(".type [value="+config.type+"]").click();
+  }
+  if ("symbols" in config){
+    config.symbols.forEach(function(symbol){
+      document.querySelector(".symbolSelect [value="+symbol+"]").click();
+    });
+  }
+  if ("keywords" in config){
+    document.querySelector(".attrs").value = config.keywords.join(", ");
+  }
+  if ("body" in config){
+    document.querySelector("textarea.effect").value = config.body;
+  }
+  if ("flavour" in config){
+    document.querySelector("textarea.flavour").value = config.flavour;
+  }
+  if ("copyright" in config){
+    document.querySelector(".copyright").value = config.copyright;
+  }
+
+  var cg = cardGenerator.generateCard.bind(cardGenerator);
+  function doGenerate(){
+    cg().then(function(){
+      window.callPhantom({result:cardGenerator.canvas.toDataURL().substr("data:image/png;base64,".length)});
+    }).catch(function(e){
+      console.error(e);
+      window.callPhantom({error:1});
+    });
+  }
+
+  if ("image" in config){
+    console.log("Building card with image");
+    cardGenerator.generateCard = doGenerate;
+    makeImage(config.image);
+  } else {
+    console.log("Building card without image");
+    doGenerate();
+  }
 }
 
 
@@ -44,10 +89,13 @@ function open(url){
     if (status !== "success") {
         phantomError("Unable to access network",status);
         phantom.exit(1);
-    } else {
-      polyfill(page);
-      page.evaluate(makeCard);
     }
+
+    polyfill(page);
+    if(fs.exists(configLoc+"-image.png")){
+      config.image = "data:image/png;base64," + btoa(fs.read(configLoc+"-image.png","b"));
+    }
+    page.evaluate(makeCard,config);
   });
 }
 
