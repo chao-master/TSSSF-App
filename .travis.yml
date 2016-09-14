@@ -11,4 +11,4 @@ before_script:
   - mkdir results
   - sleep 3
 script:
-  - ./phantomjs renderCard.js roadWarriorSkipe http://localhost:8000
+  - ./phantomjs renderCard.js roadWarriorSpike http://localhost:8000
