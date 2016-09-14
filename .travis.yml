@@ -3,4 +3,3 @@ before_script:
   - mkdir results
 script:
   - phantomjs renderCard.js test1
-x
