@@ -1,7 +1,7 @@
 before_script:
-  - rackup
+  - python -m SimpleHttpServer 8000 &
   - cd tests
   - mkdir results
   - sleep 3
 script:
-  - phantomjs renderCard.js test1
+  - phantomjs renderCard.js test1 http://localhost:8000
