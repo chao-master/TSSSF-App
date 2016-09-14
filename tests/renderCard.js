@@ -16,7 +16,7 @@ if(system.args.length < 3){
 
 function saveResult(result){
   fs.write("results/"+configLoc+".html","<img src='"+result+"'/>");
-  console.log("result saved");
+  console.log("\x1B[39mresult saved");
 }
 function makeCard(){
   var cg = new CardGenerator(document.querySelector(".card"));
@@ -27,10 +27,16 @@ function makeCard(){
 
 
 function onConsoleMessage(msg){
-  console.log(msg);
+  console.log("\x1B[34m%s",msg);
 }
+
 function onError(msg,trace){
-  console.error(msg,trace);
+  console.error("\x1B[31mUncaught error:",msg);
+  if(trace && trace.length){
+    trace.forEach(function(t){
+      console.error("\t%s: %i %s \x1B",t.file || t.sourceURL,t.line,t.function ? ' (in function ' + t.function +')' : '');
+    });
+  }
 }
 function polyfill(page){
   page.injectJs("es6-promise.min.js");
@@ -39,7 +45,7 @@ function polyfill(page){
 function open(url){
   page.open(url,function(status){
     if (status !== "success") {
-        console.error("Unable to access network",status);
+        console.error("\x1B[33mUnable to access network",status);
         phantom.exit(1);
     } else {
       polyfill(page);
