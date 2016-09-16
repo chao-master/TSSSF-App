@@ -1,30 +1,3 @@
-//Display error
-function mayError(errObj){
-    if (errObj.error){
-        console.log(errObj);
-        $("<li>").append(
-            $("<strong>").text(errObj.error+": ")
-        ).append(
-            $("<em>").text(errObj.details)
-        ).addClass("alert alert-danger").appendTo("#error");
-        $("#error").show();
-        $("#errorClear").show();
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
-//Clear Errors
-function clearErrors(){
-    $("#error").hide();
-    $("#errorClear").hide();
-}
-
-$(document).ready(function(){
-    $("#errorClear").click(clearErrors);
-});
-
 function loadFromInfo(info){
     switch(info.cgv){
         case "0.1":
@@ -52,20 +25,65 @@ function loadFromInfo(info){
     }
 }
 
+function symbolButtonClick(e){
+  var target = e.currentTarget,
+      card = document.querySelector(".card");
+
+  Array.from(target.parentNode.children).forEach(function(child){
+    if(child.getAttribute("data-button-action") != "toggle"){
+      card.classList.remove(child.value);
+    }
+  });
+
+  card.classList.add(target.value);
+}
+
+function symbolButtonToggleClick(e){
+  var target = e.currentTarget;
+  document.querySelector(".card").classList.toggle(target.value);
+}
+
+var SPECIAL_REGEX = /\\(malefemale|unicorn|pegasus|earth|alicorn|goal|time|female|male|ship|replace|swap|draw|newgoal|search|copy|changeling)/g;
+var SPECIAL_REPLACE = {
+    "\\male":"\u2642",
+    "\\female":"\u2640",
+    "\\malefemale":"\u26A4",
+    "\\ship":"\u2764",
+    "\\earth":"\uE000",
+    "\\unicorn":"\uE001",
+    "\\pegasus":"\uE002",
+    "\\alicorn":"\uE003",
+    "\\time":"\uE004",
+    "\\replace":"(Replace): While in your hand, you may discard a Pony card from the grid and play this card in its place. This power cannot be copied.",
+    "\\swap":"(Swap): You may swap 2 Pony cards on the shipping grid.",
+    "\\draw":"(Draw): You may draw a card from the Ship or Pony deck.",
+    "\\newgoal":"(New Goal): You may discard a Goal and draw a new one to replace it.",
+    "\\search":"(Search): You may search the Ship or Pony discard pile for a card of your choice and play it.",
+    "\\copy":"(Copy): You may copy the power of any Pony card currently on the shipping grid, except for Changelings.",
+    "\\changeling":"Gains the name, keywords and symbols of any single [race] of your choice until the end of the turn. If this card is moved to a new place on the grid, the current player must select a new disguise that will last until the end of their turn, even if other cards say its power would not activate."
+};
+
+function replaceSpecials(text){
+  return text.replace(SPECIAL_REGEX,function(t){
+    return SPECIAL_REPLACE[t];
+  });
+}
+
+function resizeHelpedBox(box){
+  var helper = document.querySelector(".cardHelper ."+box.className);
+  helper.textContent = helper.value;
+  box.style.height = helper.offsetHeight+"px";
+}
+
 function cardSetup(){
     //On card button clicks, remove other classes and add new ones.
     //Unless it is changeling, special case, just toggle.
-    $(".card button").click(function(){
-        if ($(this).attr("value") == "changeling"){
-            $(".card").toggleClass($(this).attr("value"));
-        } else {
-            $(this).parent().children("button").each(function(){
-                if ($(this).attr("value") != "changeling"){
-                    $(".card").removeClass($(this).attr("value"));
-                }
-            });
-            $(".card").addClass($(this).attr("value"));
-        }
+    Array.from(document.querySelectorAll(".card button")).forEach(function(c){
+      if(c.getAttribute("data-button-action") == "toggle"){
+        c.addEventListener("click",symbolButtonToggleClick);
+      } else {
+        c.addEventListener("click",symbolButtonClick);
+      }
     });
 
     //On Window resize we use css transformation to scale the card to fix
@@ -79,33 +97,13 @@ function cardSetup(){
     });
 
     //Constant infomation for special escape code handling.
-    var SPECIAL_REGEX = /\\(malefemale|unicorn|pegasus|earth|alicorn|goal|time|female|male|ship|replace|swap|draw|newgoal|search|copy|changeling)/g;
-    var SPECIAL_REPLACE = {
-        "\\male":"\u2642",
-        "\\female":"\u2640",
-        "\\malefemale":"\u26A4",
-        "\\ship":"\u2764",
-        "\\earth":"\uE000",
-        "\\unicorn":"\uE001",
-        "\\pegasus":"\uE002",
-        "\\alicorn":"\uE003",
-        "\\time":"\uE004",
-        "\\replace":"(Replace): While in your hand, you may discard a Pony card from the grid and play this card in its place. This power cannot be copied.",
-        "\\swap":"(Swap): You may swap 2 Pony cards on the shipping grid.",
-        "\\draw":"(Draw): You may draw a card from the Ship or Pony deck.",
-        "\\newgoal":"(New Goal): You may discard a Goal and draw a new one to replace it.",
-        "\\search":"(Search): You may search the Ship or Pony discard pile for a card of your choice and play it.",
-        "\\copy":"(Copy): You may copy the power of any Pony card currently on the shipping grid, except for Changelings.",
-        "\\changeling":"Gains the name, keywords and symbols of any single [race] of your choice until the end of the turn. If this card is moved to a new place on the grid, the current player must select a new disguise that will last until the end of their turn, even if other cards say its power would not activate."
-    };
+
 
     //Replace special escape codes when an input is updated
-    $(".card input[type=text], .card textarea").on("change",function(){
-        var txt = $(this).val();
-        txt = txt.replace(SPECIAL_REGEX,function(t){
-            return SPECIAL_REPLACE[t];
-        });
-        $(this).val(txt);
+    Array.from(document.querySelectorAll(".card input[type=text], .card textarea")).forEach(function(c){
+      c.addEventListener("change",function(){
+        c.value = replaceSpecials(c.value);
+      });
     });
 
     //Replace and create tooltip hints
@@ -115,30 +113,22 @@ function cardSetup(){
 
     //When a text editor is updated resize it's helper to clone back the height.
     //This is because CSS Really hates working vertically
-    $(".card textarea").on("change keyup paste",function(){
-        var t = $(this),
-            o = $(".cardHelper ." + t.attr("class"));
-        o.text(t.val());
-        t.height(o.height());
+    Array.from(document.querySelectorAll(".card textarea")).forEach(function(c){
+      c.addEventListenter("change",resizeHelpedBox.bind(null,c));
+      c.addEventListenter("keyup",resizeHelpedBox.bind(null,c));
+      c.addEventListenter("paste",resizeHelpedBox.bind(null,c));
     });
 
     //We also use a simular system for the name, but since we dont need manual
     //line breaks it gets easiers
-    $(".card .nameInput").on("change keyup paste",function(){
-        var t = $(this),
-            o = $(".card .name");
-        o.toggleClass("small",t[0].scrollWidth > t.width()+1);
-        o.text(t.val());
+    document.querySelector(".card .nameInput").addEventListenter("change",function(e){
+      var target = e.currentTarget;
+      target.classList.toggle("small",t[0].scrollWidth > t.width()+1);
     });
 
-    /*/Update image
-    $("#image").change(function(){
-        $(".card .image").css("background-image","url('"+$(this).val()+"')")
-    })*/
 
     //Inital call setup functions
     document.addEventListener("ready",function(){
       window.dispatchEvent(new Event("resize"));
-      $(".card textarea").change();
     });
 }

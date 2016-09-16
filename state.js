@@ -12,7 +12,7 @@ function parseQuery(){
         } else {
             var k = q.substr(0,eAt),
                 v = q.substr(eAt+1);
-            parsed[k] = v
+            parsed[k] = v;
         }
     }
     return parsed;
@@ -23,12 +23,12 @@ function updateFields(newGet,supressEvent){
     $.extend(GET,newGet);
     var query = $.map(GET,function(v,k){
         if (v){
-            return k+"="+v
+            return k+"="+v;
         } else {
-            return
+            return;
         }
-    }).join("&")
-    history.pushState({},"",document.location.pathname+"?"+query)
+    }).join("&");
+    history.pushState({},"",document.location.pathname+"?"+query);
     if (!supressEvent){
         $(document).trigger("state:adjust",[GET,oldGet]);
     }
@@ -38,9 +38,9 @@ window.onpopstate = function(event){
     var oldGet = $.extend({},GET);
     var get = parseQuery();
     $(document).trigger("state:adjust",[get,oldGet]);
-}
+};
 
 $(document).ready(function(){
     var get = parseQuery();
     $(document).trigger("state:adjust",[get,{"first":1}]);
-})
+});

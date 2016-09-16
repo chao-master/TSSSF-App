@@ -2,15 +2,15 @@
     /*Fonts */
         @font-face {
             font-family: Bartholowmew;
-            src: url('resources/fonts/TSSSFBartholomew-Bold.otf');
+            src: url('../resources/fonts/TSSSFBartholomew-Bold.otf');
         }
         @font-face {
             font-family: Cabin;
-            src: url('resources/fonts/TSSSFCabin-Medium.ttf');
+            src: url('../resources/fonts/TSSSFCabin-Medium.ttf');
         }
         @font-face {
             font-family: Klinic;
-            src: url('resources/fonts/KlinicSlabBookIt.otf');
+            src: url('../resources/fonts/KlinicSlabBookIt.otf');
         }
 
     /* Clear After */
@@ -248,7 +248,7 @@
 
 /*Pony & Start Cards*/
     .card.pony {
-        background-image:url('resources/templates/BLEED-Blank-Pony-cropped.png');
+        background-image:url('../resources/templates/BLEED-Blank-Pony-cropped.png');
     }
     .card.pony .name, .card.pony .nameInput, .card.pony .effect {
         color:#462c89
@@ -258,7 +258,7 @@
     }
     /*Start Card specifics (mostly colouring)*/
         .card.start {
-            background-image:url('resources/templates/BLEED-Blank-Start-cropped.png');
+            background-image:url('../resources/templates/BLEED-Blank-Start-cropped.png');
         }
         .card.start .name,.card.ship .effect {
             color:#3a3235;
@@ -278,29 +278,29 @@
         }
         /*Regular*/
             .card.pony.unicorn .iconRace, .card.start.unicorn .iconRace, button[value=unicorn] {
-                background-image:url('resources/symbols/Symbol-Unicorn.png');
+                background-image:url('../resources/symbols/Symbol-Unicorn.png');
             }
             .card.pony.earthPony .iconRace, .card.start.earthPony .iconRace, button[value=earthPony] {
-                background-image:url('resources/symbols/Symbol-Earth-Pony.png');
+                background-image:url('../resources/symbols/Symbol-Earth-Pony.png');
             }
             .card.pony.pegasus .iconRace, .card.start.pegasus .iconRace, button[value=pegasus] {
-                background-image:url('resources/symbols/Symbol-Pegasus.png');
+                background-image:url('../resources/symbols/Symbol-Pegasus.png');
             }
             .card.pony.alicorn .iconRace, .card.start.alicorn .iconRace, button[value=alicorn] {
-                background-image:url('resources/symbols/Symbol-Alicorn.png');
+                background-image:url('../resources/symbols/Symbol-Alicorn.png');
             }
         /*Changelings*/
             .card.pony.unicorn.changeling .iconRace, .card.start.unicorn.changeling .iconRace {
-                background-image:url('resources/symbols/Symbol-ChangelingUnicorn.png');
+                background-image:url('../resources/symbols/Symbol-ChangelingUnicorn.png');
             }
             .card.pony.earthPony.changeling .iconRace, .card.start.earthPony.changeling .iconRace, button[value=changeling] {
-                background-image:url('resources/symbols/Symbol-ChangelingEarthPony.png');
+                background-image:url('../resources/symbols/Symbol-ChangelingEarthPony.png');
             }
             .card.pony.pegasus.changeling .iconRace, .card.start.pegasus.changeling .iconRace {
-                background-image:url('resources/symbols/Symbol-ChangelingPegasus.png');
+                background-image:url('../resources/symbols/Symbol-ChangelingPegasus.png');
             }
             .card.pony.alicorn.changeling .iconRace, .card.start.alicorn.changeling .iconRace {
-                background-image:url('resources/symbols/Symbol-ChangelingAlicorn.png');
+                background-image:url('../resources/symbols/Symbol-ChangelingAlicorn.png');
             }
     /*Gender Icon*/
         .card .iconGender {
@@ -310,25 +310,25 @@
             top:86px;
         }
         .card.pony.female .iconGender, .card.start.female .iconGender, button[value=female] {
-            background-image:url('resources/symbols/Symbol-Female.png');
+            background-image:url('../resources/symbols/Symbol-Female.png');
         }
         .card.pony.male .iconGender, .card.start.male .iconGender, button[value=male] {
-            background-image:url('resources/symbols/Symbol-male.png');
+            background-image:url('../resources/symbols/Symbol-male.png');
         }
         .card.pony.maleFemale .iconGender, .card.start.maleFemale .iconGender, button[value=maleFemale] {
-            background-image:url('resources/symbols/Symbol-MaleFemale.png');
+            background-image:url('../resources/symbols/Symbol-MaleFemale.png');
         }
     /*Time Icon (Toggle)*/
         .card .iconTime {
             top: 530px;
         }
         .card.pony.time .iconTime, .card.start.time .iconTime, button[value=time]{
-            background-image:url('resources/symbols/symbol-dystopian-future.png');
+            background-image:url('../resources/symbols/symbol-dystopian-future.png');
         }
 
 /*Ship Cards*/
     .card.ship {
-        background-image:url('resources/templates/BLEED-Blank-Ship-cropped.png');
+        background-image:url('../resources/templates/BLEED-Blank-Ship-cropped.png');
     }
     .card.ship .name, .card.ship .nameInput, .card.ship .effect {
         color:#ce1b69;
@@ -337,12 +337,12 @@
         color: #811935;
     }
     .card.ship .iconCard {
-        background-image:url('resources/symbols/Symbol-Ship.png');
+        background-image:url('../resources/symbols/Symbol-Ship.png');
     }
 
 /*Goal Cards*/
     .card.goal {
-        background-image:url('resources/templates/BLEED-Blank-Goal-cropped.png');
+        background-image:url('../resources/templates/BLEED-Blank-Goal-cropped.png');
     }
     .card.goal .name, .card.goal .nameInput, .card.goal .effect {
         color:#123962;
@@ -354,7 +354,7 @@
         color:#172640;
     }
     .card.goal .iconCard {
-        background-image:url('resources/symbols/Symbol-Goal.png');
+        background-image:url('../resources/symbols/Symbol-Goal.png');
     }
     /*Score Icons*/
         .card.goal.s0 .iconGoal {
@@ -363,7 +363,7 @@
             background-size:94px 115px;
             top: 550px;
             margin-left:13px;
-            background-image:url('resources/symbols/symbol-0.png');
+            background-image:url('../resources/symbols/symbol-0.png');
         }
         .card.goal.s1 .iconGoal {
             width:79px;
@@ -371,14 +371,14 @@
             background-size:79px 105px;
             top: 550px;
             margin-left:15px;
-            background-image:url('resources/symbols/symbol-1.png');
+            background-image:url('../resources/symbols/symbol-1.png');
         }
         .card.goal.s2 .iconGoal {
             width:120px;
             height:92px;
             background-size:120px 92px;
             top: 550px;
-            background-image:url('resources/symbols/symbol-2.png');
+            background-image:url('../resources/symbols/symbol-2.png');
         }
         .card.goal.s3 .iconGoal {
             width:113px;
@@ -386,21 +386,21 @@
             background-size:113px 107px;
             top: 550px;
             margin-left:3px;
-            background-image:url('resources/symbols/symbol-3.png');
+            background-image:url('../resources/symbols/symbol-3.png');
         }
     /* Selection Buttons */
         .card .iconGoal:not(:hover) button{
             display:none;
         }
         .card button[value=s0]{
-            background-image:url('resources/symbols/symbol-0.png');
+            background-image:url('../resources/symbols/symbol-0.png');
         }
         .card button[value=s1]{
-            background-image:url('resources/symbols/symbol-1.png');
+            background-image:url('../resources/symbols/symbol-1.png');
         }
         .card button[value=s2]{
-            background-image:url('resources/symbols/symbol-2.png');
+            background-image:url('../resources/symbols/symbol-2.png');
         }
         .card button[value=s3]{
-            background-image:url('resources/symbols/symbol-3.png');
+            background-image:url('../resources/symbols/symbol-3.png');
         }

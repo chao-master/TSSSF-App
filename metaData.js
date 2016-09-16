@@ -26,11 +26,11 @@ MetaData = (function(){
 
     function addMetaData(uri,info){
         var metaData = $.map(info,function(data,key){
-                return makeTextBlock(key,data)
+                return makeTextBlock(key,data);
             }).join(''),
             endData = atob(uri.substr(-20)),
             keepData = endData.substr(0,endData.length-12),
-            newB64 = btoa( keepData+metaData+makeIendBlock() )
+            newB64 = btoa( keepData+metaData+makeIendBlock() );
         return uri.substr(0,uri.length-20)+newB64;
     }
 
@@ -86,7 +86,7 @@ MetaData = (function(){
         var lenS = packInt(data.length-4);
         return lenS+data+makeCRC(data);
     }
-    
+
     return {
         get:readMetaData,
         add:addMetaData

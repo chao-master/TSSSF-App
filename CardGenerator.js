@@ -6,9 +6,12 @@ var CardGenerator = (function(){
     this.canvas.width = card.offsetWidth;
     this.canvas.height = card.offsetHeight;
 
-    card.addEventListener("change",this.generateCard,true);
-    card.querySelector(".symbolSelect button")
-        .addEventListener("click",this.generateCard,true);
+    card.addEventListener("change",this.generateCard.bind(this),true);
+
+    var generateCard = this.generateCard.bind(this);
+    Array.from(card.querySelectorAll("button")).forEach(function(c){
+      c.addEventListener("click",generateCard,true);
+    });
   }
 
   CardGenerator.prototype = Object.create(Generator.prototype);
