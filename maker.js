@@ -71,7 +71,7 @@ function replaceSpecials(text){
 
 function resizeHelpedBox(box){
   var helper = document.querySelector(".cardHelper ."+box.className);
-  helper.textContent = helper.value;
+  helper.textContent = box.value;
   box.style.height = helper.offsetHeight+"px";
 }
 
@@ -106,24 +106,24 @@ function cardSetup(){
       });
     });
 
-    //Replace and create tooltip hints
-    $.each(SPECIAL_REPLACE,function(key,replace){
-        $("dt[data-original-title='"+key+"']").attr("data-original-title",replace).tooltip();
-    });
+    //TODO: Fix tooltips
 
     //When a text editor is updated resize it's helper to clone back the height.
     //This is because CSS Really hates working vertically
     Array.from(document.querySelectorAll(".card textarea")).forEach(function(c){
-      c.addEventListenter("change",resizeHelpedBox.bind(null,c));
-      c.addEventListenter("keyup",resizeHelpedBox.bind(null,c));
-      c.addEventListenter("paste",resizeHelpedBox.bind(null,c));
+      c.addEventListener("change",resizeHelpedBox.bind(null,c));
+      c.addEventListener("keyup",resizeHelpedBox.bind(null,c));
+      c.addEventListener("paste",resizeHelpedBox.bind(null,c));
     });
 
     //We also use a simular system for the name, but since we dont need manual
     //line breaks it gets easiers
-    document.querySelector(".card .nameInput").addEventListenter("change",function(e){
-      var target = e.currentTarget;
-      target.classList.toggle("small",t[0].scrollWidth > t.width()+1);
+    document.querySelector(".card .nameInput").addEventListener("change",function(e){
+      var target = e.currentTarget,
+          partner = document.querySelector(".card div.name");
+
+      partner.classList.toggle("small",target.scrollWidth > target.offsetWidth+1);
+      partner.textContent = target.value;
     });
 
 
