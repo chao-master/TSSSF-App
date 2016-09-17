@@ -1,47 +1,52 @@
-/* Generic */
-    /*Fonts */
-        @font-face {
-            font-family: Bartholowmew;
-            src: url('../resources/fonts/TSSSFBartholomew-Bold.otf');
-        }
-        @font-face {
-            font-family: Cabin;
-            src: url('../resources/fonts/TSSSFCabin-Medium.ttf');
-        }
-        @font-face {
-            font-family: Klinic;
-            src: url('../resources/fonts/KlinicSlabBookIt.otf');
-        }
+@font-face {
+    font-family: Bartholowmew;
+    src: url('../resources/fonts/TSSSFBartholomew-Bold.otf');
+}
+@font-face {
+    font-family: Cabin;
+    src: url('../resources/fonts/TSSSFCabin-Medium.ttf');
+}
+@font-face {
+    font-family: Klinic;
+    src: url('../resources/fonts/KlinicSlabBookIt.otf');
+}
 
-    /* Clear After */
-        .clearAfter::after {
-            content:"";
-            display:block;
-            clear:both;
-        }
+.hoverParent:not(:hover)>.hoverChild {
+  display:none
+}
+
+.hoverParentAll:not(:hover)>*{
+  display:none;
+}
+
+.card input[type=checkbox], .card input[type=radio]{
+  margin:0;
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+}
+
+/* Clear After */
+  .clearAfter::after {
+      content:"";
+      display:block;
+      clear:both;
+  }
 
 /* Card Helpers */
+    .cardHelper * {
+      position:absolute;
+      width: 688px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      visibility: hidden;
+      min-height:1em;
+    }
     .cardHelper .flavour {
-        position:absolute;
-        width: 688px;
-        font-family: Klinic;
-        font-size: 28px;
-        line-height: 30px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        visibility: hidden;
-        min-height:1em;
+        font: 28px/30px Klinic;
     }
     .cardHelper .effect {
-        position:absolute;
-        width: 688px;
-        font-family: Cabin;
-        font-size: 35px;
-        line-height: 43px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        visibility: hidden;
-        min-height:1em;
+        font: 35px/43px Cabin;
     }
 
 /* Card Generics */
@@ -91,39 +96,35 @@
         color: #eadcec;
         width:580px;
     }
+
+    /*Main Card body*/
+    .card .effect, .card .flavour {
+      position:absolute;
+      overflow:hidden;
+      white-space: pre-line;
+      text-align: center;
+      width:688px;
+    }
     .card .effect {
-        position: absolute;
         top: 673px;
         left: 50px;
-        width: 688px;
-        font-family: Cabin;
-        text-align: center;
-        font-size: 35px;
-        line-height: 43px;
-        overflow:hidden;
-        white-space:pre-line;
+        font: 35px/43px Cabin;
     }
     .card .flavour {
-        position: absolute;
         bottom: 45px;
         left: 50px;
-        width: 688px;
-        font-family: Klinic;
-        text-align: center;
-        font-size: 28px;
-        line-height: 30px;
-        overflow: hidden;
-        white-space:pre-line;
+        font: 28px/30px Klinic;
     }
+
+    /*Footer*/
     .card .copyright {
-        font-family: Cabin;
-        color: #eadcec;
-        bottom: 9px;
         position: absolute;
-        width: 712px;
-        font-size: 18px;
-        text-align: right;
+        bottom: 9px;
         right: 37px;
+        width: 712px;
+        font: 18px Cabin;
+        text-align: right;
+        color: #eadcec;
     }
 
 /* Card Image */
@@ -153,7 +154,25 @@
     }
 
 /* Icon Generics */
-    .card .iconGender,.card .iconRace,.card .iconCard,.card .iconGoal,.card .iconTime {
+    .card .ponyIcons {
+      position:absolute;
+      left:58px;
+      top:56px;
+      height: 208px;
+      display: flex;
+    }
+
+    .card .iconHolder {
+      display:flex;
+      flex-direction: column;
+    }
+
+    .card .ponyIcons .icon {
+      width:104px;
+      height:104px;
+    }
+
+    .card .iconCard,.card .iconGoal,.card .iconTime {
         position:absolute;
         left: 58px;
         width:0;
@@ -190,58 +209,35 @@
         height:80px;
         margin:12px;
     }
-    .card .type button{
-        height:88px;
-        width:190px;
-        position:relative;
-        background-color: rgba(255,255,255,0.4);
+    .card .type {
+        position: absolute;
+        height: 190px;
+        overflow: hidden;
+        top: 295px;
+        left: 45px;
+        display: flex;
+        flex-direction: column;
+        min-width: 75px;
     }
-    .card .type button:first-child{
-        margin-top:75px;
+    .card .type label {
+        font-size: 37px;
+        font-family: Bartholowmew;
+        margin-left: 90px;
+        width: auto;
     }
-    .card .type button::before{
-      font-size: 76px;
-      font-family: Bartholowmew;
-      text-align: center;
-      position:absolute;
-      top:-20px;
-      left:0;
-      right:0;
-    }
-    .card .symbolSelect:hover{
-        width:auto!important;
-        height:auto!important;
-    }
-    .card .type:hover{
-        height:auto;
-    }
-    .card .type{
-      position: absolute;
-      height: 75px;
-      width: 190px;
-      overflow: hidden;
-      transform: rotate(-90deg);
-      transform-origin: 0 0;
-      top: 485px;
-      left: 45px;
-    }
-    .card button[value=pony]::before{
-        content:"Pony";
+    .card .type .pony {
         color:#4b2a83;
     }
-    .card button[value=ship]::before{
-        content:"Ship";
+    .card .type .ship {
         color:#c3136b;
     }
-    .card button[value=goal]::before{
-        content:"Goal";
+    .card .type .goal {
         color:#3d2360;
     }
-    .card button[value=start]::before{
-        content:"Start";
+    .card .type .start {
         color:#3c3538;
     }
-    .card button[value=""], .card button[value=R], .card button[value=G]{
+    .card input[value=""], .card input[value=R], .card input[value=G]{
         border: dashed #333;
         border-radius: 50%;
     }
@@ -270,52 +266,40 @@
             color: #edefee;
         }
     /*Race Icon*/
-        .card .iconRace {
-            top: 160px;
-        }
-        .card.pony.G:not(.R) .iconRace, .card.start.G:not(.R) .iconRace {
-            top:86px;
-        }
         /*Regular*/
-            .card.pony.unicorn .iconRace, .card.start.unicorn .iconRace, button[value=unicorn] {
+            .card.pony.unicorn .icon.race, .card.start.unicorn .icon.race, input[value=unicorn] {
                 background-image:url('../resources/symbols/Symbol-Unicorn.png');
             }
-            .card.pony.earthPony .iconRace, .card.start.earthPony .iconRace, button[value=earthPony] {
+            .card.pony.earthPony .icon.race, .card.start.earthPony .icon.race, input[value=earthPony] {
                 background-image:url('../resources/symbols/Symbol-Earth-Pony.png');
             }
-            .card.pony.pegasus .iconRace, .card.start.pegasus .iconRace, button[value=pegasus] {
+            .card.pony.pegasus .icon.race, .card.start.pegasus .icon.race, input[value=pegasus] {
                 background-image:url('../resources/symbols/Symbol-Pegasus.png');
             }
-            .card.pony.alicorn .iconRace, .card.start.alicorn .iconRace, button[value=alicorn] {
+            .card.pony.alicorn .icon.race, .card.start.alicorn .icon.race, input[value=alicorn] {
                 background-image:url('../resources/symbols/Symbol-Alicorn.png');
             }
         /*Changelings*/
-            .card.pony.unicorn.changeling .iconRace, .card.start.unicorn.changeling .iconRace {
+            .card.pony.unicorn.changeling .icon.race, .card.start.unicorn.changeling .icon.race {
                 background-image:url('../resources/symbols/Symbol-ChangelingUnicorn.png');
             }
-            .card.pony.earthPony.changeling .iconRace, .card.start.earthPony.changeling .iconRace, button[value=changeling] {
+            .card.pony.earthPony.changeling .icon.race, .card.start.earthPony.changeling .icon.race, input[value=changeling] {
                 background-image:url('../resources/symbols/Symbol-ChangelingEarthPony.png');
             }
-            .card.pony.pegasus.changeling .iconRace, .card.start.pegasus.changeling .iconRace {
+            .card.pony.pegasus.changeling .icon.race, .card.start.pegasus.changeling .icon.race {
                 background-image:url('../resources/symbols/Symbol-ChangelingPegasus.png');
             }
-            .card.pony.alicorn.changeling .iconRace, .card.start.alicorn.changeling .iconRace {
+            .card.pony.alicorn.changeling .icon.race, .card.start.alicorn.changeling .icon.race {
                 background-image:url('../resources/symbols/Symbol-ChangelingAlicorn.png');
             }
     /*Gender Icon*/
-        .card .iconGender {
-            top: 56px;
-        }
-        .card.pony.R:not(.G) .iconGender, .card.start.R:not(.G) .iconGender {
-            top:86px;
-        }
-        .card.pony.female .iconGender, .card.start.female .iconGender, button[value=female] {
+        .card.pony.female .icon.gender, .card.start.female .icon.gender, input[value=female] {
             background-image:url('../resources/symbols/Symbol-Female.png');
         }
-        .card.pony.male .iconGender, .card.start.male .iconGender, button[value=male] {
+        .card.pony.male .icon.gender, .card.start.male .icon.gender, input[value=male] {
             background-image:url('../resources/symbols/Symbol-male.png');
         }
-        .card.pony.maleFemale .iconGender, .card.start.maleFemale .iconGender, button[value=maleFemale] {
+        .card.pony.maleFemale .icon.gender, .card.start.maleFemale .icon.gender, input[value=maleFemale] {
             background-image:url('../resources/symbols/Symbol-MaleFemale.png');
         }
     /*Time Icon (Toggle)*/

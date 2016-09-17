@@ -46,63 +46,61 @@ function makeImage(src){
 }
 
 //Handles the loading & manipulation of the card art.
-$(document).ready(function(){
-    //Add Hidden File Input click cascade
-    $(".card .imageWrap .upload").click(function(e){
-        if (event.which == 1){
-            $("#uploadImage").click();
-        }
-    });
-    $("#import").click(function(e){
-        if (event.which == 1){
-            $("#uploadImport").click();
-        }
-    });
+  //Add Hidden File Input click cascade
+  $.bind(".card .imageWrap .upload","click",function(e){
+      if (event.which == 1){
+          $.one("#uploadImage").click();
+      }
+  });
+  $.bind("#import","click",function(e){
+      if (event.which == 1){
+          $.one("#uploadImport").click();
+      }
+  });
 
-    //Upload image
-    $("#uploadImage").change(function(){
-        console.log("updating imgae");
-        var file = this.files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            makeImage(reader.result);
-        };
-        reader.readAsDataURL(file);
-    });
+  //Upload image
+  $.bind("#uploadImage","change",function(){
+      console.log("updating imgae");
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          makeImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+  });
 
-    //Import card
-    $("#uploadImport").change(function(){
-        var file = this.files[0];
-        var metaReader = new FileReader();
-        metaReader.onload = function() {
-            var info = MetaData.get(metaReader.result);
-            if (info){
-                var reader = new FileReader();
-                reader.onload = function(){
-                    extractImage(reader.result,function(){
-                        loadFromInfo(info);
-                    });
-                };
-                reader.readAsDataURL(file);
-            } else {
-                mayError({
-                    error:"Could not find export data in card image",
-                    details:"Import only works for cards made with this tool, if you wish to import card art use the upload card art button (lower corner of card image)"
-                });
-            }
-        };
-        metaReader.readAsArrayBuffer(file);
-    });
+  //Import card
+  $.bind("#uploadImport","change",function(){
+      var file = this.files[0];
+      var metaReader = new FileReader();
+      metaReader.onload = function() {
+          var info = MetaData.get(metaReader.result);
+          if (info){
+              var reader = new FileReader();
+              reader.onload = function(){
+                  extractImage(reader.result,function(){
+                      loadFromInfo(info);
+                  });
+              };
+              reader.readAsDataURL(file);
+          } else {
+              mayError({
+                  error:"Could not find export data in card image",
+                  details:"Import only works for cards made with this tool, if you wish to import card art use the upload card art button (lower corner of card image)"
+              });
+          }
+      };
+      metaReader.readAsArrayBuffer(file);
+  });
 
-    //Autofocus URL field on popup
-    $("#webimage-dialog").on("shown.bs.modal",function(e){
-        $("#webimage").focus();
-    });
+  //Autofocus URL field on popup
+  $.bind("#webimage-dialog","shown.bs.modal",function(e){
+      $("#webimage").focus();
+  });
 
-    //Get image from website
-    $("#submit-webimage").click(function(e){
-        var img = $("#webimage").val();
-        makeImage(img);
-        cardGenerator.redraw();
-    });
+  //Get image from website
+  $.bind("#submit-webimage","click",function(e){
+      var img = $("#webimage").val();
+      makeImage(img);
+      cardGenerator.redraw();
 });

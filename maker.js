@@ -1,46 +1,18 @@
-function loadFromInfo(info){
-    switch(info.cgv){
-        case "0.1":
-            $(".attrs").val(info.attrs);
-            $(".effect").val(info.effect).change();
-            $(".flavour").val(info.flavour).change();
-            $(".copyright").val(info.copyright);
-            $(".card").attr("class",info.classes);
-            $(".card .nameInput").val(info.name).change();
-            var img = new Image();
-            img.onload = function(){
-                $(".card .image")[0].getContext("2d").drawImage(img,0,0);
-            };
-            img.src = info.imgstrip;
-            break;
-        case undefined:
-            //Do nothing, the text data here praobly isn't a card data.
-            break;
-        default:
-            mayError({
-                error:"Bad card meta data version",
-                details:"The card generator version ("+info.cgv+") is not recognised"
-            });
-            break;
-    }
-}
+function cardChange(e){
+  var form = e.currentTarget,
+      inputs = form.elements;
 
-function symbolButtonClick(e){
-  var target = e.currentTarget,
-      card = document.querySelector(".card");
-
-  Array.from(target.parentNode.children).forEach(function(child){
-    if(child.getAttribute("data-button-action") != "toggle"){
-      card.classList.remove(child.value);
-    }
+  form.className = "card";
+  ["gender","race","type"].forEach(function(n){
+    form.classList.add(inputs[n].value);
   });
-
-  card.classList.add(target.value);
 }
 
-function symbolButtonToggleClick(e){
-  var target = e.currentTarget;
-  document.querySelector(".card").classList.toggle(target.value);
+function resizeCard(e){
+  var cardWrapper = document.querySelector(".cardwrapper"),
+      card = document.querySelector(".card"),
+      scale = cardWrapper.offsetWidth/788;
+  card.style.transform = "scale("+scale+")";
 }
 
 var SPECIAL_REGEX = /\\(malefemale|unicorn|pegasus|earth|alicorn|goal|time|female|male|ship|replace|swap|draw|newgoal|search|copy|changeling)/g;
@@ -63,65 +35,38 @@ var SPECIAL_REPLACE = {
     "\\changeling":"Gains the name, keywords and symbols of any single [race] of your choice until the end of the turn. If this card is moved to a new place on the grid, the current player must select a new disguise that will last until the end of their turn, even if other cards say its power would not activate."
 };
 
-function replaceSpecials(text){
-  return text.replace(SPECIAL_REGEX,function(t){
+function replaceSpecials(e){
+  e.target.value = e.target.value.replace(SPECIAL_REGEX,function(t){
     return SPECIAL_REPLACE[t];
   });
 }
 
-function resizeHelpedBox(box){
-  var helper = document.querySelector(".cardHelper ."+box.className);
-  helper.textContent = box.value;
-  box.style.height = helper.offsetHeight+"px";
+//TODO: fix the text box not resizing correctlly with a trailing enter
+function resizeHelpedBox(e){
+  var helper = document.querySelector(".cardHelper ."+e.target.className);
+  helper.textContent = e.target.value;
+  e.target.style.height = helper.offsetHeight+"px";
 }
 
 function cardSetup(){
-    //On card button clicks, remove other classes and add new ones.
-    //Unless it is changeling, special case, just toggle.
-    Array.from(document.querySelectorAll(".card button")).forEach(function(c){
-      if(c.getAttribute("data-button-action") == "toggle"){
-        c.addEventListener("click",symbolButtonToggleClick);
-      } else {
-        c.addEventListener("click",symbolButtonClick);
-      }
-    });
+    //Bind the card to update on changes
+    $.bind(".card","change",cardChange);
 
-    //On Window resize we use css transformation to scale the card to fix
-    //Yes it seems horrible but the alternative was somehting even more horrible!
-    window.addEventListener("resize",function(){
-      var cardWrapper = document.querySelector(".cardwrapper"),
-          card = document.querySelector(".card"),
-          scale = cardWrapper.offsetWidth/788;
-      card.style.transform = "scale("+scale+")";
-      //cardWrapper.style.height = 1088*scale+"px";
-    });
-
-    //Constant infomation for special escape code handling.
-
+    //XXX Hack to make the card scale to fill the window
+    window.addEventListener("resize",resizeCard);
 
     //Replace special escape codes when an input is updated
-    Array.from(document.querySelectorAll(".card input[type=text], .card textarea")).forEach(function(c){
-      c.addEventListener("change",function(){
-        c.value = replaceSpecials(c.value);
-      });
-    });
+    $.bind(".card input[type=text], .card textarea","change",replaceSpecials);
 
     //TODO: Fix tooltips
 
-    //When a text editor is updated resize it's helper to clone back the height.
-    //This is because CSS Really hates working vertically
-    Array.from(document.querySelectorAll(".card textarea")).forEach(function(c){
-      c.addEventListener("change",resizeHelpedBox.bind(null,c));
-      c.addEventListener("keyup",resizeHelpedBox.bind(null,c));
-      c.addEventListener("paste",resizeHelpedBox.bind(null,c));
-    });
+    //XXX Hack to make textareas resize vertically
+    $.bind(".card textarea","change keyup paste",resizeHelpedBox);
 
-    //We also use a simular system for the name, but since we dont need manual
-    //line breaks it gets easiers
-    document.querySelector(".card .nameInput").addEventListener("change",function(e){
+    //Resize name to be small when there is a lot of text
+    $.bind(".card .nameInput","change",function(e){
       var target = e.currentTarget,
           partner = document.querySelector(".card div.name");
-
       partner.classList.toggle("small",target.scrollWidth > target.offsetWidth+1);
       partner.textContent = target.value;
     });

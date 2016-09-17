@@ -16,52 +16,72 @@
     <main class="flexOut">
       <header></header>
       <section class="cardwrapper">
-        <div class="card pony maleFemale unicorn s0">
+
+        <form class="card pony female pegasus">
+
+
           <input type="text" class="nameInput" placeholder="Card Name" required/>
+
+
           <div class="name"></div>
+
+
           <canvas class="image" width="601px" height="444px"></canvas>
-          <div class="imageWrap">
+
+          <div class="imageWrap hover-children">
             <button class="upload"><i class="fa fa-fw fa-upload"></i></button>
             <button class="webimage" data-toggle="modal" data-target="#webimage-dialog">
               <i class="fa fa-fw fa-globe"></i>
             </button>
           </div>
+
           <div class="iconCard"></div>
-          <div class="iconGender symbolSelect">
-            <button class="symbol" value="female"></button>
-            <button class="symbol" value="male"></button>
-            <button class="symbol" value="maleFemale"></button>
-            <button class="symbol blank" value="G"></button>
+
+          <div class="ponyIcons hoverParent">
+            <div class="iconHolder">
+              <div class="icon gender"></div>
+              <div class="icon race"></div>
+            </div>
+            <div class="ponyIconsSelect hoverChild">
+              <input type="radio" name="gender" class="icon" value="female" checked/>
+              <input type="radio" name="gender" class="icon" value="male"/>
+              <input type="radio" name="gender" class="icon" value="maleFemale"/>
+              <input type="radio" name="gender" class="icon"/>
+              <input type="radio" name="race" class="icon" value="unicorn" checked/>
+              <input type="radio" name="race" class="icon" value="pegasus"/>
+              <input type="radio" name="race" class="icon" value="earthPony"/>
+              <input type="radio" name="race" class="icon" value="alicorn"/>
+              <input type="checkbox" name="changeling" class="icon" value="changeling"/>
+              <input type="radio" name="race" class="icon"/>
+            </div>
           </div>
-          <div class="iconRace symbolSelect">
-            <button class="symbol" value="unicorn"></button>
-            <button class="symbol" value="pegasus"></button>
-            <button class="symbol" value="earthPony"></button>
-            <button class="symbol" value="alicorn"></button>
-            <button class="symbol" value="changeling" data-button-action="toggle"></button>
-            <button class="symbol blank" value="R"></button>
+
+          <div class="type hoverParentAll">
+            <label class="pony"><input type="radio" name="type" value="pony" checked>Pony</input></label>
+            <label class="ship"><input type="radio" name="type" value="ship">Ship</input></label>
+            <label class="goal"><input type="radio" name="type" value="goal">Goal</input></label>
+            <label class="start"><input type="radio" name="type" value="start">Start</input></label>
           </div>
-          <div class="type">
-            <button value="pony"></button>
-            <button value="ship"></button>
-            <button value="goal"></button>
-            <button value="start"></button>
-          </div>
+
           <input type="text" class="attrs" placeholder="Attributes"/>
           <textarea class="effect" placeholder="Effect" required></textarea>
           <textarea class="flavour" placeholder="Flavour Text" required></textarea>
+
           <div class="iconGoal symbolSelect">
-            <button class="symbol" value="s0"></button>
-            <button class="symbol" value="s1"></button>
-            <button class="symbol" value="s2"></button>
-            <button class="symbol" value="s3"></button>
+            <input type="radio" name="iconGoal" value="s0"/>
+            <input type="radio" name="iconGoal" value="s1"/>
+            <input type="radio" name="iconGoal" value="s2"/>
+            <input type="radio" name="iconGoal" value="s3"/>
           </div>
+
           <div class="iconTime symbolSelect">
-            <button class="symbol" value="time"></button>
-            <button class="symbol" value=""></button>
+            <input type="radio" value="time"/>
+            <input type="radio" value=""/>
           </div>
+
+
           <input type="text" class="copyright" value="TSSSF made by Horrible People Games; Art by Unknown;" placeholder="Copyright &amp; Artist infomation" required/>
-        </div>
+        </form>
       </section>
 
 
@@ -154,8 +174,7 @@
       </footer>
     </main>
 
-    <!--script src="js/jquery-1.11.3.min.js"></script-->
-    <script src="js/lz-string.min.js"></script>
+    <script src="dollarMenu.js"></script>
     <script src="state.js"></script>
     <script src="maker.js"></script>
     <script src="Generator.js"></script>
