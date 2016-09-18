@@ -158,47 +158,42 @@
       position:absolute;
       left:58px;
       top:56px;
-      height: 208px;
       display: flex;
     }
 
     .card .iconHolder {
       display:flex;
       flex-direction: column;
+      justify-content: flex-end;
+      align-self: flex-start;
+      min-height: 139px;
     }
 
-    .card.ship .ponyIcons, .card.goal .ponyIcons {
+    .card.ship .ponyIconsSelect, .card.goal .ponyIconsSelect,
+    .card.ship .icon.gender, .card.goal .icon.gender,
+    .card.ship .icon.race, .card.goal .icon.race {
+      display: none;
+    }
+
+    .card.noRace .icon.race, .card.noGender .icon.gender {
+      display: none;
+    }
+
+    .card.pony .icon.cardIcon, .card.start .icon.cardIcon {
+      display: none;
+    }
+    .card.pony .icon.gender, .card.pony .icon.
+    .card.start .icon.race, {
       display: none;
     }
 
     .card .ponyIcons .icon {
-      width:104px;
-      height:104px;
-    }
-
-    .card .iconCard,.card .iconGoal,.card .iconTime {
-        position:absolute;
-        left: 58px;
-        width:0;
-        max-width:444px;
-        padding-left:104px;
-        height:0;
-        min-height: 104px;
-        background-size: 104px;
-        background-repeat: no-repeat;
-        overflow:hidden;
-        pointer-events: none;
-    }
-    .card.pony .iconGender, .card.pony .iconRace, .card.pony .iconTime,
-    .card.start .iconGender, .card.start .iconRace, .card.start .iconTime,
-    .card.ship .iconCard, .card.goal .iconGoal{
-        pointer-events: all;
+      width: 105px;
+      height: 105px;
+      background-size: contain;
     }
 
 /*Card Type Icon & Buttons*/
-    .card .iconCard{
-        top:86px;
-    }
     .card button{
         background-size: contain;
         background-repeat: no-repeat;
@@ -208,7 +203,7 @@
         cursor:pointer;
         padding:0;
     }
-    .card .symbolSelect button{
+    .card .symbolSelect input{
         width:80px;
         height:80px;
         margin:12px;
@@ -241,7 +236,7 @@
     .card .type .start {
         color:#3c3538;
     }
-    .card input[value=""], .card input[value=R], .card input[value=G]{
+    .card input[value=noRace], .card input[value=noGender]{
         border: dashed #333;
         border-radius: 50%;
     }
@@ -324,7 +319,7 @@
     .card.ship .flavour {
         color: #811935;
     }
-    .card.ship .iconCard {
+    .card.ship .icon.cardIcon {
         background-image:url('../resources/symbols/Symbol-Ship.png');
     }
 
@@ -341,7 +336,7 @@
     .card.goal .flavour {
         color:#172640;
     }
-    .card.goal .iconCard {
+    .card.goal .icon.cardIcon {
         background-image:url('../resources/symbols/Symbol-Goal.png');
     }
     /*Score Icons*/
