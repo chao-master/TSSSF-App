@@ -36,7 +36,6 @@ function makeImage(src){
             sY = (img.height-sHeight)/2;
         }
         context.drawImage(img,sX,sY,sWidth,sHeight,0,0,cWidth,cHeight);
-        cardGenerator.generateCard();
         console.log("image updated");
     };
     img.onerror = function(e){
@@ -102,5 +101,4 @@ function makeImage(src){
   $.bind("#submit-webimage","click",function(e){
       var img = $("#webimage").val();
       makeImage(img);
-      cardGenerator.redraw();
 });

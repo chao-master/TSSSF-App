@@ -16,7 +16,6 @@ if(system.args.length < 3){
 function saveResult(result){
   if("result" in result){
     fs.write("results/"+configLoc+".png",atob(result.result),"b");
-    page.render("results/"+configLoc+"-snap.png");
     phantomMsg("Result saved");
     phantom.exit(0);
   } else {
@@ -29,46 +28,43 @@ function makeCard(config){
   console.log("Setting card values");
   if ("title" in config){
     document.querySelector(".nameInput").value = config.title;
+    document.querySelector(".nameInput").dispatchEvent(new Event("change"));
   }
   if ("type" in config){
-    document.querySelector(".type [value="+config.type+"]").click();
+    document.querySelector("input[value="+config.type+"]").click();
   }
   if ("symbols" in config){
     config.symbols.forEach(function(symbol){
-      document.querySelector(".symbolSelect [value="+symbol+"]").click();
+      document.querySelector("input[value="+symbol+"]").click();
     });
   }
   if ("keywords" in config){
     document.querySelector(".attrs").value = config.keywords.join(", ");
+    document.querySelector(".attrs").dispatchEvent(new Event("change"));
   }
   if ("body" in config){
     document.querySelector("textarea.effect").value = config.body;
+    document.querySelector("textarea.effect").dispatchEvent(new Event("change"));
   }
   if ("flavour" in config){
     document.querySelector("textarea.flavour").value = config.flavour;
+    document.querySelector("textarea.flavour").dispatchEvent(new Event("change"));
   }
   if ("copyright" in config){
     document.querySelector(".copyright").value = config.copyright;
+    document.querySelector(".copyright").dispatchEvent(new Event("change"));
   }
-
-  var cg = cardGenerator.generateCard.bind(cardGenerator);
-  function doGenerate(){
-    cg().then(function(){
-      window.callPhantom({result:cardGenerator.canvas.toDataURL().substr("data:image/png;base64,".length)});
-    }).catch(function(e){
-      console.error(e);
-      window.callPhantom({error:1});
-    });
-  }
-
   if ("image" in config){
-    console.log("Building card with image");
-    cardGenerator.generateCard = doGenerate;
     makeImage(config.image);
-  } else {
-    console.log("Building card without image");
-    doGenerate();
   }
+  
+  document.querySelector(".card").dispatchEvent(new Event("change"));
+
+  console.log("Building card");
+  cardGenerator.generateCard().then(function(){
+    console.log("card built");
+    window.callPhantom({result:cardGenerator.canvas.toDataURL().substr("data:image/png;base64,".length)});
+  });
 }
 
 

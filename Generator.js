@@ -11,7 +11,6 @@ var Generator = (function(){
     return Promise.all(
       Array.from(elements)
       .map(renderFunction)
-      .map(function(p){return p.catch(function(e){console.error(e.trace || e);});})
     );
   };
 
@@ -95,9 +94,7 @@ var Generator = (function(){
       src = src.slice(1,-1);
     }
 
-    if (!src){
-      return Promise.reject("No image source");
-    }
+    if (!src) return Promise.resolve();
 
     var img = new Image();
     img.setAttribute("crossorigin","anonymous");

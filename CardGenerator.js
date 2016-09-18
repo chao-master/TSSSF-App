@@ -6,10 +6,8 @@ var CardGenerator = (function(){
     this.canvas.width = card.offsetWidth;
     this.canvas.height = card.offsetHeight;
 
-    card.addEventListener("change",this.generateCard.bind(this),true);
-
     var generateCard = this.generateCard.bind(this);
-    Array.from(card.querySelectorAll("button")).forEach(function(c){
+    Array.prototype.forEach.call(card.querySelectorAll("button"),function(c){
       c.addEventListener("click",generateCard,true);
     });
   }
@@ -38,13 +36,7 @@ var CardGenerator = (function(){
 
   CardGenerator.prototype.drawCardImage = function(){
     console.log("drawing image");
-    return this.drawImageElement(this.card.querySelector(".image"))
-      .catch(function(e){
-        if (e instanceof Error){
-          throw e;
-        }
-        console.warn(e);
-      });
+    return this.drawImageElement(this.card.querySelector(".image"));
   };
 
   CardGenerator.prototype.generateCard = function(){
@@ -53,7 +45,7 @@ var CardGenerator = (function(){
       .then(this.drawTexts.bind(this))
       .then(this.drawCardImage.bind(this))
       .then(this.drawIcons.bind(this))
-      .catch(function(e){console.error(e,e.stack);});
+      .catch(function(e){console.error("Error making card:",e,e.stack);});
   };
 
   return CardGenerator;
