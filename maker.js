@@ -6,6 +6,7 @@ function cardChange(e){
   ["gender","race","type"].forEach(function(n){
     form.classList.add(inputs[n].value);
   });
+  form.classList.toggle("changeling",inputs.changeling.checked);
 }
 
 function resizeCard(e){
