@@ -1,6 +1,6 @@
 var CardGenerator = (function(){
   function CardGenerator(card){
-    Generator.call(this);
+    Generator.call(this,undefined,card);
     this.card = card;
 
     this.canvas.width = card.offsetWidth;
