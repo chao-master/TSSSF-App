@@ -2,10 +2,21 @@
 * Renders HTML DOM elements onto a canvas
 */
 var Generator = (function(){
-  function Generator(canvas){
+  function Generator(canvas,anchor){
     this.canvas = canvas === undefined? document.createElement("canvas"): canvas;
     this.context = this.canvas.getContext("2d");
+    this.anchor = anchor === undefined? document.body: anchor;
   }
+
+  Generator.prototype.offsetFromAnchor = function(element){
+    var x=0,y=0;
+    while(element !== this.anchor && element !== null){
+      x += element.offsetLeft;
+      y += element.offsetTop;
+      element = element.offsetParent;
+    }
+    return {x:x,y:y};
+  };
 
   Generator.prototype.renderAll = function(elements,renderFunction){
     return Promise.all(
@@ -45,8 +56,7 @@ var Generator = (function(){
         lineHeight = style.lineHeight.slice(0,-2)*1,
         line = "",
         width = element.offsetWidth,
-        y = element.offsetTop,
-        x = element.offsetLeft;
+        pos = this.offsetFromAnchor(element);
 
       if(isNaN(lineHeight)){
         lineHeight = 0;
@@ -58,13 +68,13 @@ var Generator = (function(){
       this.context.textBaseline = "top";
 
       if (this.context.textAlign == "center") {
-          x += width/2;
+          pos.x += width/2;
       } else if (this.context.textAlign == "right") {
-          x += width;
+          pos.x += width;
       }
 
       this.splitText(text,width).forEach(function(line,n){
-        generator.context.fillText(line,x,y+lineHeight*n);
+        generator.context.fillText(line,pos.x,pos.y+lineHeight*n);
       });
 
       return Promise.resolve();
@@ -112,8 +122,7 @@ var Generator = (function(){
           style.backgroundImage.slice(4,-1);
 
     var width, height,
-        y = element.offsetTop,
-        x = element.offsetLeft,
+        pos = this.offsetFromAnchor(element),
         bgSize = style.backgroundSize.match(/([0-9]+)px(?: ([0-9]+)px)?/);
 
       if (bgSize){
@@ -126,7 +135,7 @@ var Generator = (function(){
 
       var generator = this;
       return this.fetchImage(src).then(function(img){
-        generator.drawImage(img,x,y,width,height);
+        generator.drawImage(img,pos.x,pos.y,width,height);
       }).catch(function(e){
         if (e == "No image source"){
           return Promise.reject(e+" defined for ["+element.getAttribute("class")+"]");

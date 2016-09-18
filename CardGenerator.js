@@ -30,7 +30,7 @@ var CardGenerator = (function(){
   CardGenerator.prototype.drawIcons = function(){
     console.log("drawing icons");
     return this.renderAll(this.card.querySelectorAll(
-      ".iconCard,.iconGender,.iconRace,.iconGoal,.iconTime"
+      ".iconHolder .icon, .iconGoal, .iconTime"
     ),this.drawImageElement.bind(this));
   };
 
