@@ -167,6 +167,10 @@
       flex-direction: column;
     }
 
+    .card.ship .ponyIcons, .card.goal .ponyIcons {
+      display: none;
+    }
+
     .card .ponyIcons .icon {
       width:104px;
       height:104px;
